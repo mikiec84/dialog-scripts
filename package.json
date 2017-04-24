@@ -1,8 +1,10 @@
 {
   "name": "@dlghq/dialog-scripts",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "repository": "ssh://git@bitbucket.transmit.im:7999/dlgweb/dialog-scripts.git",
   "author": "Nikita Gusakov <gusnkt@gmail.com>",
   "license": "UNLICENSED",
@@ -10,11 +12,10 @@
     "test": "exit 0",
     "prebuild": "rm -rf lib/",
     "build": "babel -d lib/ src/",
-    "release": "npm run build",
+    "release": "git push --follow-tags",
     "preversion": "npm test",
     "postversion": "npm run release",
     "prerelease": "npm run build",
-    "release": "git push --follow-tags",
     "postrelease": "npm publish"
   },
   "dependencies": {
