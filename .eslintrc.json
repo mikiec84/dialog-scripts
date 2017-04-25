@@ -1,0 +1,8 @@
+{
+  "extends": "@dlghq/eslint-config-dialog/base",
+  "rules": {
+    "no-sync": 0,
+    "no-console": 0,
+    "no-await-in-loop": 0
+  }
+}

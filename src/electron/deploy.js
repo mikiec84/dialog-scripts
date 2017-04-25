@@ -1,7 +1,8 @@
 /*
  * Copyright 2017 dialog LLC <info@dlg.im>
+ * @flow
  */
- 
+
 const fs = require('fs');
 const Promise = require('bluebird');
 const request = Promise.promisify(require('request'));
@@ -9,7 +10,7 @@ const request = Promise.promisify(require('request'));
 type Options = {
   url: string,
   username: string,
-  password: password,
+  password: string,
   version: string,
   notes: string,
   channel: 'stable' | 'rc' | 'beta' | 'alpha'
@@ -22,11 +23,11 @@ async function login(url: string, username: string, password: string): Promise<s
     json: true,
     body: { username, password }
   });
-  
+
   if (typeof response.body.token === 'string') {
     return response.body.token;
   }
-  
+
   throw new Error('Authorization failed');
 }
 
@@ -38,21 +39,21 @@ async function hasVersion(token: string, url: string, version: string): Promise<
       Authorization: `Bearer ${token}`
     }
   });
-  
+
   return response.statusCode === 200;
 }
 
 async function createVersion(
-  token: string, 
-  url: string, 
-  version: string, 
-  channel: string, 
+  token: string,
+  url: string,
+  version: string,
+  channel: string,
   notes: string
 ): Promise<void> {
   if (await hasVersion(token, url, version)) {
     throw new Error(`Relase v${version} already exists`);
   }
-  
+
   await request({
     uri: url + '/api/version',
     method: 'POST',
@@ -68,15 +69,15 @@ async function createVersion(
       }
     }
   });
-  
+
   console.log(`[deploy]: successfully created v${version} release.`);
 }
 
 async function upload(
-  token: string, 
-  url: string, 
-  version: string, 
-  platform: string, 
+  token: string,
+  url: string,
+  version: string,
+  platform: string,
   fileName: string
 ): Promise<void> {
   await request({
@@ -91,15 +92,15 @@ async function upload(
       file: fs.createReadStream(fileName)
     }
   });
-  
+
   console.log(`[deploy]: successfully uploaded ${platform}@v${version}.`);
 }
 
 async function deploy(binaries: Array<[string, string]>, options: Options): Promise<void> {
   const token = await login(options.url, options.username, options.password);
   await createVersion(token, options.url, options.version, options.channel, options.notes);
-  
-  for (const [platform, path] of options.binaries) {
+
+  for (const [platform, path] of binaries) {
     await upload(token, options.url, options.version, platform, path);
   }
 }
