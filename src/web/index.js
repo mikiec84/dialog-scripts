@@ -9,7 +9,7 @@ const configureRules = require('./configureRules');
 const configurePlugins = require('./configurePlugins');
 const resolve = require('../utils/resolve');
 
-type Options = {
+export type Options = {
   root: string,
   version: string,
   override: { [path: string]: string },
