@@ -7,7 +7,7 @@
     "bin"
   ],
   "bin": {
-    "dialog-scripts": "./bin/cli.js"
+    "dialog-scripts": "./bin/dialog-scripts.js"
   },
   "repository": "ssh://git@bitbucket.transmit.im:7999/dlgweb/dialog-scripts.git",
   "author": "Nikita Gusakov <gusnkt@gmail.com>",
