@@ -16,7 +16,7 @@ function configureOutput(options: Options) {
   if (options.environment === 'production') {
     return {
       path: output,
-      publicPath: '/',
+      publicPath: './',
       filename: '[name].[hash].js',
       chunkFilename: '[id].[chunkhash].js',
       sourceMapFilename: '[file].map'
@@ -26,7 +26,7 @@ function configureOutput(options: Options) {
   return {
     path: output,
     pathinfo: true,
-    publicPath: '/',
+    publicPath: './',
     filename: '[name].js'
   };
 }
