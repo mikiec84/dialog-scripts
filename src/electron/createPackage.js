@@ -7,9 +7,9 @@ import type { DesktopOptions } from '../types';
 
 function createPackage(options: DesktopOptions) {
   return {
-    name: options.productName,
-    version: options.version,
+    name: options.name,
     author: options.author,
+    version: options.version,
     homepage: options.homepage,
     productName: options.productName,
     description: options.description,

@@ -5,9 +5,6 @@
 
 const program = require('commander');
 const Promise = require('bluebird');
-const commands = [
-  require('./build-web')
-];
 
 Promise.config({
   warnings: true,
@@ -16,6 +13,18 @@ Promise.config({
 });
 
 program.version('1.0.1');
+
+type Command = {
+  name: string,
+  description?: string,
+  options?: Array<[string, string]>,
+  action: (args: Object) => Promise<void>
+};
+
+const commands: Command[] = [
+  require('./build-web'),
+  require('./build-desktop')
+];
 
 commands.forEach((desc) => {
   const command = program.command(desc.name);

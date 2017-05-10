@@ -80,11 +80,13 @@ function configurePlugins(options: WebOptions) {
       filename: '[name].[contenthash].css'
     }));
 
-    plugins.push(new CompressionPlugin({
-      test: /\.(js|css|html)$/,
-      minRatio: 0.8,
-      threshold: 10240
-    }));
+    if (options.gzip !== false) {
+      plugins.push(new CompressionPlugin({
+        test: /\.(js|css|html)$/,
+        minRatio: 0.8,
+        threshold: 10240
+      }));
+    }
 
     if (options.configureSentry) {
       const sentry = options.configureSentry();

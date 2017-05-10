@@ -4,11 +4,8 @@
  */
 
 module.exports = {
-  web: {
-    createWebpackConfig: require('./web')
-  },
-  electron: {
-    build: require('./electron/build'),
-    deploy: require('./electron/deploy')
-  }
+  createWebWebpackConfig: require('./web/createWebpackConfig'),
+  createDesktopWebpackConfig: require('./electron/createWebpackConfig'),
+  buildDesktop: require('./electron/build'),
+  deployDesktop: require('./electron/deploy')
 };

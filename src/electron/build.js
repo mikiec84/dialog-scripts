@@ -6,11 +6,11 @@
 const Promise = require('bluebird');
 const { build: _build, Platform, Arch } = require('electron-builder');
 
-type PlatformType = 'osx' | 'linux' | 'windows';
+type PlatformType = 'macos' | 'linux' | 'windows';
 
 function getTaskByPlatform(platform: PlatformType): mixed[] {
   switch (platform) {
-    case 'osx':
+    case 'macos':
       return ['osx_64', Platform.MAC.createTarget('zip', Arch.x64)];
 
     case 'linux':
@@ -25,13 +25,14 @@ function getTaskByPlatform(platform: PlatformType): mixed[] {
   }
 }
 
-async function build(config: Object, platforms: PlatformType[]): Promise<Array<[string, string]>> {
+async function build(platforms: PlatformType[], config: Object): Promise<Array<[string, string]>> {
+  console.log(config);
   const result = [];
 
   const tasks = platforms.map((platform) => getTaskByPlatform(platform));
 
   for (const [platform, targets] of tasks) {
-    const [path] = await _build({ config, targets });
+    const [path] = await _build({ ...config, targets });
     result.push([platform, path]);
   }
 

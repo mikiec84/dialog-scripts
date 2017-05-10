@@ -12,7 +12,7 @@ type Options = {
   username: string,
   password: string,
   version: string,
-  notes: string,
+  notes?: string,
   channel: 'stable' | 'rc' | 'beta' | 'alpha'
 };
 
@@ -48,7 +48,7 @@ async function createVersion(
   url: string,
   version: string,
   channel: string,
-  notes: string
+  notes?: string
 ): Promise<void> {
   if (await hasVersion(token, url, version)) {
     throw new Error(`Relase v${version} already exists`);

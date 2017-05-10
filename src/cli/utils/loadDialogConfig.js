@@ -3,10 +3,11 @@
  * @flow
  */
 
-import type { Options as WebOptions } from '../../web';
+import type { WebOptions, DesktopOptions } from '../../types';
 
 type DialogConfig = {
-  web: WebOptions
+  web: WebOptions,
+  desktop: DesktopOptions
 };
 
 function loadDialogConfig(): DialogConfig {
