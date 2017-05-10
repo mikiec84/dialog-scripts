@@ -3,19 +3,12 @@
  * @flow
  */
 
-const path = require('path');
+import type { WebOptions } from '../types';
 
-type Options = {
-  root: string,
-  environment: string
-};
-
-function configureOutput(options: Options) {
-  const output = path.resolve(options.root, 'dist');
-
+function configureOutput(options: WebOptions) {
   if (options.environment === 'production') {
     return {
-      path: output,
+      path: options.output,
       publicPath: './',
       filename: '[name].[hash].js',
       chunkFilename: '[id].[chunkhash].js',
@@ -24,7 +17,7 @@ function configureOutput(options: Options) {
   }
 
   return {
-    path: output,
+    path: options.output,
     pathinfo: true,
     publicPath: './',
     filename: '[name].js'

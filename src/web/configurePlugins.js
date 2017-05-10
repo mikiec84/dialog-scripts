@@ -3,6 +3,8 @@
  * @flow
  */
 
+import type { WebOptions } from '../types';
+
 const {
   DefinePlugin,
   EnvironmentPlugin,
@@ -20,19 +22,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const OverridePlugin = require('../webpack/OverridePlugin');
 const resolve = require('../utils/resolve');
 
-type Options = {
-  root: string,
-  version: string,
-  override: { [path: string]: string },
-  environment: string,
-  sentry?: {
-    apiKey: string,
-    project: string,
-    organisation: string
-  }
-};
-
-function configurePlugins(options: Options) {
+function configurePlugins(options: WebOptions) {
   const plugins = [];
 
   plugins.push(new LoaderOptionsPlugin({
@@ -41,8 +31,8 @@ function configurePlugins(options: Options) {
   }));
 
   plugins.push(new HTMLPlugin({
-    favicon: resolve(options.root, 'assets/favicon.png'),
-    template: resolve(options.root, 'app/index.html')
+    favicon: options.favicon,
+    template: options.htmlTemplate
   }));
 
   plugins.push(new DefinePlugin({
@@ -67,6 +57,7 @@ function configurePlugins(options: Options) {
 
   if (options.environment === 'production') {
     plugins.push(new UglifyJsPlugin({
+      sourceMap: true,
       beautify: false,
       comments: false,
       compress: {
@@ -95,15 +86,20 @@ function configurePlugins(options: Options) {
       threshold: 10240
     }));
 
-    if (options.sentry) {
-      plugins.push(new SentryPlugin({
-        apiKey: options.sentry.apiKey,
-        project: options.sentry.project,
-        organisation: options.sentry.organisation,
-        release() {
-          return options.version;
-        }
-      }));
+    if (options.configureSentry) {
+      const sentry = options.configureSentry();
+
+      if (sentry) {
+        plugins.push(new SentryPlugin({
+          apiKey: sentry.apiKey,
+          project: sentry.project,
+          organisation: sentry.organisation,
+          baseSentryURL: sentry.url,
+          release() {
+            return options.version;
+          }
+        }));
+      }
     }
   }
 

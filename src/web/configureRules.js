@@ -3,36 +3,26 @@
  * @flow
  */
 
+import type { WebOptions } from '../types';
+
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const postcss = require('@dlghq/postcss-dialog');
 const resolve = require('../utils/resolve');
+const configurePostCSS = require('./configurePostCSS');
 
-type Options = {
-  root: string,
-  cssPrefix: string,
-  environment: string
-};
-
-function configurePostCSS() {
-  return {
-    loader: 'postcss-loader',
-    options: {
-      plugins() {
-        return postcss();
-      }
-    }
-  };
-}
-
-function configureModuleRules(options: Options) {
+function configureModuleRules(options: WebOptions) {
   const rules = [];
 
-  const val = [
+  const valFiles = [
     resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/messages-generate.js')
   ];
 
+  if (options.valFiles) {
+    valFiles.push(...options.valFiles);
+  }
+
   rules.push({
-    test: val,
+    test: valFiles,
     loader: 'val-loader'
   });
 
@@ -44,7 +34,6 @@ function configureModuleRules(options: Options) {
       cacheDirectory: true,
       presets: [
         ['@dlghq/dialog', {
-          runtime: true,
           modules: false,
           optimize: options.environment === 'production',
           development: options.environment === 'development'
@@ -52,13 +41,13 @@ function configureModuleRules(options: Options) {
       ]
     },
     include: [
-      resolve(options.root, 'app'),
+      path.dirname(options.main),
       resolve(options.root, 'node_modules/@dlghq'),
       resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
       resolve(options.root, 'node_modules/@dlghq/dialog-components')
     ],
     exclude: [
-      ...val,
+      ...valFiles,
       resolve(options.root, 'node_modules/@dlghq/dialog-java-core')
     ]
   });
@@ -81,7 +70,7 @@ function configureModuleRules(options: Options) {
         ]
       }),
       include: [
-        resolve(options.root, 'app/styles/global.css'),
+        options.cssMain,
         resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
       ]
     });
@@ -104,13 +93,13 @@ function configureModuleRules(options: Options) {
         ]
       }),
       include: [
-        resolve(options.root, 'app'),
+        path.dirname(options.cssMain),
         resolve(options.root, 'node_modules/@dlghq'),
         resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
         resolve(options.root, 'node_modules/@dlghq/dialog-components')
       ],
       exclude: [
-        resolve(options.root, 'app/styles/global.css'),
+        options.cssMain,
         resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
       ]
     });
@@ -130,7 +119,7 @@ function configureModuleRules(options: Options) {
         configurePostCSS(options)
       ],
       include: [
-        resolve(options.root, 'app/styles/global.css'),
+        options.cssMain,
         resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
       ]
     });
@@ -151,10 +140,10 @@ function configureModuleRules(options: Options) {
         configurePostCSS(options)
       ],
       include: [
-        resolve(options.root, 'app')
+        path.dirname(options.main)
       ],
       exclude: [
-        resolve(options.root, 'app/styles/global.css')
+        options.cssMain
       ]
     });
 

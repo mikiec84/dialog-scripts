@@ -1,15 +1,11 @@
 {
   "plugins": [
     "transform-flow-comments",
-    ["transform-object-rest-spread", { 
-      "useBuiltIns": true 
+    ["transform-object-rest-spread", {
+      "useBuiltIns": true
     }],
-    ["transform-async-to-module-method", { 
-      "module": "bluebird", 
-      "method": "coroutine" 
-    }],
-    ["transform-es2015-modules-commonjs", { 
-      "loose": true, 
+    ["transform-es2015-modules-commonjs", {
+      "loose": true,
       "noInterop": true,
       "allowTopLevelThis": true
     }]

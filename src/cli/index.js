@@ -6,7 +6,7 @@
 const program = require('commander');
 const Promise = require('bluebird');
 const commands = [
-  require('./build')
+  require('./build-web')
 ];
 
 Promise.config({
@@ -15,7 +15,7 @@ Promise.config({
   longStackTraces: true
 });
 
-program.version('1.0.0');
+program.version('1.0.1');
 
 commands.forEach((desc) => {
   const command = program.command(desc.name);

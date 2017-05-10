@@ -3,34 +3,23 @@
  * @flow
  */
 
+import type { WebOptions } from '../types';
+
 const getBuildNumber = require('build-number');
 const configureOutput = require('./configureOutput');
 const configureRules = require('./configureRules');
 const configurePlugins = require('./configurePlugins');
 const resolve = require('../utils/resolve');
 
-export type Options = {
-  root: string,
-  version: string,
-  override: { [path: string]: string },
-  cssPrefix: string,
-  environment: string,
-  sentry?: {
-    apiKey: string,
-    project: string,
-    organisation: string
-  }
-};
-
-function createWebpackConfig(options: Options) {
+function createWebpackConfig(options: WebOptions) {
   options.version += '-' + (getBuildNumber() || 'dev');
 
   return {
     context: resolve(options.root),
     entry: {
-      index: [
-        resolve(options.root, 'app/index.js'),
-        resolve(options.root, 'app/styles/global.css')
+      app: [
+        options.main,
+        options.cssMain
       ],
       vendor: [
         '@dlghq/dialog-java-core'
