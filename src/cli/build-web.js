@@ -15,6 +15,8 @@ module.exports = {
     process.env.BABEL_ENV = 'production';
 
     const config = loadDialogConfig();
-    await build(createWebConfig(config.web));
+    const webConfig = createWebConfig(config.web);
+
+    await build(webConfig);
   }
 };

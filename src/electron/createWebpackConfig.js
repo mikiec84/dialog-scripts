@@ -12,6 +12,7 @@ const createWebConfig = require('../web/createWebpackConfig');
 
 function createMainConfig(options: DesktopOptions) {
   return {
+    name: 'desktop-main',
     context: options.root,
     entry: options.main,
     output: {

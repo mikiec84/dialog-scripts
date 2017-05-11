@@ -7,6 +7,7 @@ const path = require('path');
 const webpackBuild = require('../webpack/build');
 const electronBuild = require('../electron/build');
 const electronPublish = require('../electron/deploy');
+const logger = require('../utils/logger');
 const loadDialogConfig = require('./utils/loadDialogConfig');
 const createWebpackConfig = require('../electron/createWebpackConfig');
 const detectElectronVersion = require('../electron/detectElectronVersion');
@@ -26,9 +27,11 @@ module.exports = {
 
     const config = loadDialogConfig();
     if (!args.packOnly) {
+      logger.info('Start bundling');
       await webpackBuild(createWebpackConfig(config.web, config.desktop));
     }
 
+    logger.info('Start electron build');
     const binaries = await electronBuild(config.desktop.platforms, {
       appId: config.desktop.appId,
       copyright: config.desktop.copyright,
@@ -56,6 +59,7 @@ module.exports = {
         throw new Error('Publish config not specified');
       }
 
+      logger.info('Start app publishing');
       await electronPublish(binaries, {
         ...publishConfig,
         version: config.desktop.version,
