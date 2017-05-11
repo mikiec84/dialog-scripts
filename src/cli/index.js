@@ -39,10 +39,13 @@ commands.forEach((desc) => {
   }
 
   command.action((...args) => {
-    desc.action(...args).catch((error) => {
+    desc.action(...args).then(() => {
+      process.exit(0); // eslint-disable-line no-process-exit
+    }).catch((error) => {
       const chalk = require('chalk');
 
       console.trace(chalk.red(error));
+      process.exit(1); // eslint-disable-line no-process-exit
     });
   });
 });
