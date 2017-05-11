@@ -32,7 +32,7 @@ function configurePlugins(options: WebOptions) {
 
   plugins.push(new HTMLPlugin({
     favicon: options.favicon,
-    template: options.htmlTemplate
+    template: options.entry.html
   }));
 
   plugins.push(new DefinePlugin({

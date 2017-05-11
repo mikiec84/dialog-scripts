@@ -9,9 +9,6 @@ const path = require('path');
 const postcss = require('@dlghq/postcss-dialog');
 
 function configurePostCSSRule(options: WebOptions) {
-  const jsDir = path.dirname(options.main);
-  const cssDir = path.dirname(options.cssMain);
-
   const override = {};
   Object.keys(options.override).forEach((_from) => {
     const _to = options.override[_from];
@@ -29,7 +26,7 @@ function configurePostCSSRule(options: WebOptions) {
         return postcss({
           import: {
             resolve(id: string, base: string): string {
-              if (base.startsWith(jsDir) || base.startsWith(cssDir)) {
+              if (base.startsWith(options.paths.styles) || base.startsWith(options.paths.cssModules)) {
                 return id;
               }
 

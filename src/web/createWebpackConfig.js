@@ -12,14 +12,14 @@ const configurePlugins = require('./configurePlugins');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
-  options.version += '-' + (getBuildNumber() || 'dev');
+  options.version += '-build-' + (getBuildNumber() || 'dev');
 
   return {
     context: resolve(options.root),
     entry: {
       app: [
-        options.main,
-        options.cssMain
+        options.entry.js,
+        options.entry.css
       ],
       vendor: [
         '@dlghq/dialog-java-core'

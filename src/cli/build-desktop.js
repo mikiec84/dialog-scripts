@@ -54,7 +54,7 @@ module.exports = {
     });
 
     if (args.publish) {
-      const publishConfig = config.desktop.configurePublish();
+      const publishConfig = config.desktop.configurePublish && config.desktop.configurePublish();
       if (!publishConfig) {
         throw new Error('Publish config not specified');
       }

@@ -12,11 +12,18 @@ export type SentryConfig = {
 
 export type WebOptions = {
   root: string,
-  main: string,
-  cssMain: string,
-  htmlTemplate: string,
+  entry: {
+    js: string,
+    css: string,
+    html: string
+  },
+  paths: {
+    js: string,
+    styles: string,
+    cssModules: string,
+    valFiles?: string[]
+  },
   favicon: string,
-  valFiles?: string[],
   output: string,
   version: string,
   override: { [path: string]: string },
@@ -32,7 +39,7 @@ export type DesktopPublishOptions = {
   url: string,
   username: string,
   password: string
-}
+};
 
 export type DesktopOptions = {
   root: string,
@@ -51,5 +58,5 @@ export type DesktopOptions = {
   copyright: string,
   schema: string,
   platforms: PlatformType[],
-  configurePublish: () => ?DesktopPublishOptions
+  configurePublish?: () => ?DesktopPublishOptions
 };
