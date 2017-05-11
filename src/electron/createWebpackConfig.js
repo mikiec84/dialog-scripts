@@ -23,7 +23,11 @@ function createMainConfig(options: DesktopOptions) {
     target: 'electron-main',
     plugins: [
       new GenerateJsonPlugin('package.json', createPackage(options), null, '  ')
-    ]
+    ],
+    node: {
+      __dirname: false,
+      __filename: false
+    }
   };
 }
 
