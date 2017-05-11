@@ -26,7 +26,7 @@ function configurePostCSSRule(options: WebOptions) {
     loader: 'postcss-loader',
     options: {
       plugins() {
-        return [postcss({
+        return postcss({
           import: {
             resolve(id: string, base: string): string {
               if (base.startsWith(jsDir) || base.startsWith(cssDir)) {
@@ -37,7 +37,7 @@ function configurePostCSSRule(options: WebOptions) {
               return override[fullName] || id;
             }
           }
-        })];
+        });
       }
     }
   };
