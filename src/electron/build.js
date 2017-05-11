@@ -26,7 +26,6 @@ function getTaskByPlatform(platform: PlatformType): mixed[] {
 }
 
 async function build(platforms: PlatformType[], config: Object): Promise<Array<[string, string]>> {
-  console.log(config);
   const result = [];
 
   const tasks = platforms.map((platform) => getTaskByPlatform(platform));

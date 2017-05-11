@@ -9,6 +9,7 @@ const electronBuild = require('../electron/build');
 const electronPublish = require('../electron/deploy');
 const logger = require('../utils/logger');
 const loadDialogConfig = require('./utils/loadDialogConfig');
+const shellExec = require('./utils/shellExec');
 const createWebpackConfig = require('../electron/createWebpackConfig');
 const detectElectronVersion = require('../electron/detectElectronVersion');
 
@@ -19,7 +20,8 @@ module.exports = {
     ['--force-sign', 'Fail if signing failed'],
     ['--publish', 'Publish artifacts to electron-release-server'],
     ['--pack-only', 'Build app without webpack bundling'],
-    ['--channel [channel]', 'Publish to specific channel (stable, rc, beta, alpha)']
+    ['--channel [channel]', 'Publish to specific channel (stable, rc, beta, alpha)'],
+    ['--unlock-keychain [password]', 'Pass password for keychain unlock before packing']
   ],
   async action(args: Object) {
     process.env.NODE_ENV = 'production';
@@ -29,6 +31,20 @@ module.exports = {
     if (!args.packOnly) {
       logger.info('Start bundling');
       await webpackBuild(createWebpackConfig(config.web, config.desktop));
+    }
+
+    if (args.unlockKeychain) {
+      const password = JSON.stringify(args.unlockKeychain);
+      try {
+        await shellExec(`security unlock-keychain -p ${password} ~/Library/Keychains/login.keychain`);
+
+        if (process.env.CSC_NAME) {
+          const certName = JSON.stringify(`Developer ID Application: ${process.env.CSC_NAME}`);
+          await shellExec(`security set-key-partition-list -S apple: -k ${password} -D ${certName} -t private`);
+        }
+      } catch (error) {
+        logger.error(error.message.replace(password, '***'));
+      }
     }
 
     logger.info('Start electron build');
