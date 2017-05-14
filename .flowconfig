@@ -1,0 +1,17 @@
+[ignore]
+<PROJECT_ROOT>/lib/.*
+
+[include]
+
+[libs]
+
+[options]
+emoji=true
+module.system=haste
+module.use_strict=true
+
+module.file_ext=.js
+module.name_mapper='.*\.json' -> 'mixed'
+
+suppress_type=$FlowIssue
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
