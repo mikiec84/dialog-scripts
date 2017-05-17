@@ -49,15 +49,6 @@ module.exports = {
 
     logger.info('Start electron build');
     const binaries = await electronBuild(config.desktop.platforms, {
-      appId: config.desktop.appId,
-      copyright: config.desktop.copyright,
-      mac: {
-        category: 'public.app-category.social-networking'
-      },
-      protocols: {
-        name: config.desktop.productName + ' URL',
-        schemes: [config.desktop.schema]
-      },
       projectDir: config.desktop.root,
       config: {
         forceCodeSigning: args.forceSign,
@@ -65,6 +56,15 @@ module.exports = {
         directories: {
           app: config.desktop.output,
           buildResources: path.join(config.desktop.root, 'assets')
+        },
+        appId: config.desktop.appId,
+        copyright: config.desktop.copyright,
+        mac: {
+          category: 'public.app-category.social-networking'
+        },
+        protocols: {
+          name: config.desktop.productName + ' URL',
+          schemes: [config.desktop.schema]
         }
       }
     });
