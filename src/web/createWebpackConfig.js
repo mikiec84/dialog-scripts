@@ -5,14 +5,14 @@
 
 import type { WebOptions } from '../types';
 
-const getBuildNumber = require('build-number');
+const getVersion = require('./getVersion');
 const configureOutput = require('./configureOutput');
 const configureRules = require('./configureRules');
 const configurePlugins = require('./configurePlugins');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
-  options.version += '-build-' + (getBuildNumber() || 'dev');
+  options.version += getVersion(options.version);
 
   return {
     context: resolve(options.root),
