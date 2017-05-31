@@ -94,15 +94,20 @@ async function upload(
   });
 
   console.log(`[deploy]: successfully uploaded ${platform}@v${version}.`);
+
+  // try to fix missing uploads
+  await Promise.delay(3000);
 }
 
 async function deploy(binaries: Array<[string, string]>, options: Options): Promise<void> {
   const token = await login(options.url, options.username, options.password);
   await createVersion(token, options.url, options.version, options.channel, options.notes);
 
-  for (const [platform, path] of binaries) {
-    await upload(token, options.url, options.version, platform, path);
-  }
+  await Promise.map(binaries, ([platform, path]) => {
+    return upload(token, options.url, options.version, platform, path);
+  }, {
+    concurrency: 1
+  });
 }
 
 module.exports = deploy;
