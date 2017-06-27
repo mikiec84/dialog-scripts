@@ -10,6 +10,7 @@ function getPackageVersion(packageName): ?string {
   try {
     // $FlowFixMe
     const pkg: Object = require(path.join(packageName, 'package.json'));
+
     return typeof pkg.version === 'string' ? pkg.version : null;
   } catch (e) {
     return null;
@@ -18,11 +19,13 @@ function getPackageVersion(packageName): ?string {
 
 function getSDKVersion(): ?string {
   const version = getPackageVersion('@dlghq/dialog-web-core');
+
   return version ? `sdk-v${version}` : null;
 }
 
 function getCoreVersion(): ?string {
   const version = getPackageVersion('@dlghq/dialog-java-core');
+
   return version ? `core-v${version}` : null;
 }
 

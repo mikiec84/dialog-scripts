@@ -41,11 +41,14 @@ function configureModuleRules(options: WebOptions) {
       babelrc: false,
       cacheDirectory: true,
       presets: [
-        ['@dlghq/dialog', {
-          modules: false,
-          optimize: options.environment === 'production',
-          development: options.environment === 'development'
-        }]
+        [
+          '@dlghq/dialog',
+          {
+            modules: false,
+            optimize: options.environment === 'production',
+            development: options.environment === 'development'
+          }
+        ]
       ]
     },
     include: [
@@ -147,12 +150,8 @@ function configureModuleRules(options: WebOptions) {
         },
         configurePostCSS(options)
       ],
-      include: [
-        ...toArray(options.paths.cssModules)
-      ],
-      exclude: [
-        ...toArray(options.paths.styles)
-      ]
+      include: [...toArray(options.paths.cssModules)],
+      exclude: [...toArray(options.paths.styles)]
     });
 
     // dialog sdk
@@ -170,12 +169,8 @@ function configureModuleRules(options: WebOptions) {
         },
         configurePostCSS(options)
       ],
-      include: [
-        resolve(options.root, 'node_modules/@dlghq/dialog-web-core')
-      ],
-      exclude: [
-        resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
-      ]
+      include: [resolve(options.root, 'node_modules/@dlghq/dialog-web-core')],
+      exclude: [resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')]
     });
 
     // dialog components
@@ -193,9 +188,7 @@ function configureModuleRules(options: WebOptions) {
         },
         configurePostCSS(options)
       ],
-      include: [
-        resolve(options.root, 'node_modules/@dlghq/dialog-components')
-      ]
+      include: [resolve(options.root, 'node_modules/@dlghq/dialog-components')]
     });
   }
 
@@ -204,9 +197,7 @@ function configureModuleRules(options: WebOptions) {
     loader: 'yml-loader'
   });
 
-  const icons = [
-    resolve(options.root, 'node_modules/@dlghq/dialog-components/src/components/Icon/svg')
-  ];
+  const icons = [resolve(options.root, 'node_modules/@dlghq/dialog-components/src/components/Icon/svg')];
 
   rules.push({
     test: /\.(svg|png|gif|jpe?g|ttf|eot|woff2?|mp3)$/,
@@ -214,17 +205,13 @@ function configureModuleRules(options: WebOptions) {
     options: {
       name: '[sha1:hash:hex].[ext]'
     },
-    exclude: [
-      ...icons
-    ]
+    exclude: [...icons]
   });
 
   rules.push({
     test: /\.svg$/,
     loader: 'svg-sprite-loader',
-    include: [
-      ...icons
-    ]
+    include: [...icons]
   });
 
   return rules;

@@ -71,9 +71,7 @@ function configurePlugins(options: WebOptions) {
         comments: false,
         screw_ie8: true
       },
-      exclude: [
-        resolve(options.root, 'node_modules/@dlghq/dialog-java-core/core.js')
-      ]
+      exclude: [resolve(options.root, 'node_modules/@dlghq/dialog-java-core/core.js')]
     }));
 
     plugins.push(new ExtractTextPlugin({

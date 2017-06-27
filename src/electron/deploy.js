@@ -103,7 +103,10 @@ async function deploy(binaries: Array<[string, string]>, options: Options): Prom
   const token = await login(options.url, options.username, options.password);
   await createVersion(token, options.url, options.version, options.channel, options.notes);
 
-  await Promise.map(binaries, ([platform, path]) => {
+  await Promise.map(binaries, ([
+    platform,
+    path
+  ]) => {
     return upload(token, options.url, options.version, platform, path);
   }, {
     concurrency: 1

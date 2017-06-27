@@ -21,9 +21,7 @@ function createWebpackConfig(options: WebOptions) {
         options.entry.js,
         options.entry.css
       ],
-      vendor: [
-        '@dlghq/dialog-java-core'
-      ]
+      vendor: ['@dlghq/dialog-java-core']
     },
     output: configureOutput(options),
     resolveLoader: {

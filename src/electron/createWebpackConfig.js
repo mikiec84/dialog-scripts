@@ -21,9 +21,7 @@ function createMainConfig(options: DesktopOptions) {
       filename: 'main.js'
     },
     target: 'electron-main',
-    plugins: [
-      new GenerateJsonPlugin('package.json', createPackage(options), null, '  ')
-    ],
+    plugins: [new GenerateJsonPlugin('package.json', createPackage(options), null, '  ')],
     node: {
       __dirname: false,
       __filename: false

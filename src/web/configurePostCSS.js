@@ -31,6 +31,7 @@ function configurePostCSSRule(options: WebOptions) {
               }
 
               const fullName = id.startsWith('.') ? path.resolve(base, id) : id;
+
               return override[fullName] || id;
             }
           }

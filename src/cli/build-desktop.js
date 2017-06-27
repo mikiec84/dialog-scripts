@@ -17,11 +17,26 @@ module.exports = {
   name: 'build-desktop',
   description: 'Build desktop application',
   options: [
-    ['--force-sign', 'Fail if signing failed'],
-    ['--publish', 'Publish artifacts to electron-release-server'],
-    ['--pack-only', 'Build app without webpack bundling'],
-    ['--channel [channel]', 'Publish to specific channel (stable, rc, beta, alpha)'],
-    ['--unlock-keychain [password]', 'Pass password for keychain unlock before packing']
+    [
+      '--force-sign',
+      'Fail if signing failed'
+    ],
+    [
+      '--publish',
+      'Publish artifacts to electron-release-server'
+    ],
+    [
+      '--pack-only',
+      'Build app without webpack bundling'
+    ],
+    [
+      '--channel [channel]',
+      'Publish to specific channel (stable, rc, beta, alpha)'
+    ],
+    [
+      '--unlock-keychain [password]',
+      'Pass password for keychain unlock before packing'
+    ]
   ],
   async action(args: Object) {
     process.env.NODE_ENV = 'production';

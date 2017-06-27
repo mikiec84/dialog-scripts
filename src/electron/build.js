@@ -11,13 +11,22 @@ type PlatformType = 'macos' | 'linux' | 'windows';
 function getTaskByPlatform(platform: PlatformType): mixed[] {
   switch (platform) {
     case 'macos':
-      return ['osx_64', Platform.MAC.createTarget('zip', Arch.x64)];
+      return [
+        'osx_64',
+        Platform.MAC.createTarget('zip', Arch.x64)
+      ];
 
     case 'linux':
-      return ['linux_32', Platform.LINUX.createTarget('deb', Arch.ia32)];
+      return [
+        'linux_32',
+        Platform.LINUX.createTarget('deb', Arch.ia32)
+      ];
 
     case 'windows':
-      return ['windows_32', Platform.WINDOWS.createTarget('nsis', Arch.ia32, Arch.x64)];
+      return [
+        'windows_32',
+        Platform.WINDOWS.createTarget('nsis', Arch.ia32, Arch.x64)
+      ];
 
     default:
       (platform: empty); // eslint-disable-line
@@ -30,9 +39,15 @@ async function build(platforms: PlatformType[], config: Object): Promise<Array<[
 
   const tasks = platforms.map((platform) => getTaskByPlatform(platform));
 
-  for (const [platform, targets] of tasks) {
+  for (const [
+    platform,
+    targets
+  ] of tasks) {
     const [path] = await _build({ ...config, targets });
-    result.push([platform, path]);
+    result.push([
+      platform,
+      path
+    ]);
   }
 
   return result;
