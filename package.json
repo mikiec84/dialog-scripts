@@ -50,7 +50,7 @@
     "svg-sprite-loader": "0.3.1",
     "url-loader": "0.5.9",
     "val-loader": "1.0.2",
-    "webpack": "3.0.0",
+    "webpack": "2.6.1",
     "webpack-dev-server": "2.5.0",
     "webpack-sentry-plugin": "1.9.2",
     "yml-loader": "2.0.1"
