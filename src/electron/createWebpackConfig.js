@@ -20,6 +20,21 @@ function createMainConfig(options: DesktopOptions) {
       pathinfo: true,
       filename: 'main.js'
     },
+    module: {
+      rules: [
+        {
+          test: /\.yml$/,
+          loader: 'yml-loader'
+        },
+        {
+          test: /\.(svg|png|gif|jpe?g|ico|ttf|eot|woff2?|mp3)$/,
+          loader: 'file-loader',
+          options: {
+            name: '[sha1:hash:hex].[ext]'
+          }
+        }
+      ]
+    },
     target: 'electron-main',
     plugins: [new GenerateJsonPlugin('package.json', createPackage(options), null, '  ')],
     node: {
