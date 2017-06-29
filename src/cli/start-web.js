@@ -38,8 +38,14 @@ module.exports = {
       }
     });
 
-    server.listen(port, host, () => {
-      console.log('Dialog web server started!');
+    return new Promise((resolve, reject) => {
+      server.listen(port, host, (error) => {
+        if (error) {
+          reject(error);
+        } else {
+          console.log('Dialog web server started!');
+        }
+      });
     });
   }
 };
