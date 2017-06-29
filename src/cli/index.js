@@ -23,6 +23,7 @@ type Command = {
 
 const commands: Command[] = [
   require('./build-web'),
+  require('./start-web'),
   require('./build-desktop')
 ];
 
