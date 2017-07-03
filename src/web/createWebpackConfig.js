@@ -12,7 +12,7 @@ const configurePlugins = require('./configurePlugins');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
-  options.version += getVersion(options.version);
+  options.version = getVersion(options.version);
 
   return {
     context: resolve(options.root),
