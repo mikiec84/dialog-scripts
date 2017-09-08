@@ -33,7 +33,7 @@ export type WebOptions = {
   configureSentry?: () => SentryConfig
 };
 
-export type PlatformType = 'macos' | 'linux' | 'windows';
+export type PlatformType = 'macos' | 'deb' | 'rpm' | 'linux' | 'windows';
 
 export type DesktopPublishOptions = {
   url: string,

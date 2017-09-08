@@ -5,9 +5,14 @@
 
 const { exec } = require('child_process');
 
-function shellExec(command: string) {
+type Result = {
+  stdout: string,
+  stderr: string
+};
+
+function shellExec(command: string): Promise<Result> {
   return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
+    exec(command, (error: Error, stdout: string, stderr: string) => {
       if (error) {
         reject(error);
       } else {

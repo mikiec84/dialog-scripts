@@ -3,10 +3,9 @@
  * @flow
  */
 
+import type { PlatformType } from '../types';
 const Promise = require('bluebird');
 const { build: _build, Platform, Arch } = require('electron-builder');
-
-type PlatformType = 'macos' | 'linux' | 'windows';
 
 function getTaskByPlatform(platform: PlatformType): mixed[] {
   switch (platform) {
@@ -16,10 +15,17 @@ function getTaskByPlatform(platform: PlatformType): mixed[] {
         Platform.MAC.createTarget('zip', Arch.x64)
       ];
 
+    case 'deb':
     case 'linux':
       return [
         'linux_32',
-        Platform.LINUX.createTarget('deb', Arch.ia32)
+        Platform.LINUX.createTarget('deb', Arch.ia32, Arch.x64)
+      ];
+
+    case 'rpm':
+      return [
+        'linux_32',
+        Platform.LINUX.createTarget('rpm', Arch.ia32, Arch.x64)
       ];
 
     case 'windows':
