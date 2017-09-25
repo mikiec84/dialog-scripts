@@ -45,7 +45,12 @@ commands.forEach((desc) => {
     }).catch((error) => {
       const chalk = require('chalk');
 
-      console.trace(chalk.red(error));
+      if (error instanceof Error) {
+        console.trace(chalk.red(error));
+      } else {
+        console.log(error);
+      }
+
       process.exit(1); // eslint-disable-line no-process-exit
     });
   });
