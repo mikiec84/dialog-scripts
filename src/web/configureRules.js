@@ -63,6 +63,40 @@ function configureModuleRules(options: WebOptions) {
     ]
   });
 
+  rules.push({
+    test: /\.worker\.js$/,
+    use: [
+      'worker-loader',
+      {
+        loader: 'babel-loader',
+        options: {
+          babelrc: false,
+          cacheDirectory: true,
+          presets: [
+            [
+              '@dlghq/dialog',
+              {
+                modules: false,
+                optimize: options.environment === 'production',
+                development: options.environment === 'development'
+              }
+            ]
+          ]
+        }
+      }
+    ],
+    include: [
+      ...toArray(options.paths.js),
+      resolve(options.root, 'node_modules/@dlghq'),
+      resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
+      resolve(options.root, 'node_modules/@dlghq/dialog-components')
+    ],
+    exclude: [
+      ...valFiles,
+      resolve(options.root, 'node_modules/@dlghq/dialog-java-core')
+    ]
+  });
+
   if (options.environment === 'production') {
     // global
     rules.push({

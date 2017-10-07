@@ -53,6 +53,7 @@
     "webpack": "2.7.0",
     "webpack-dev-server": "2.9.1",
     "webpack-sentry-plugin": "1.14.0",
+    "worker-loader": "1.0.0",
     "yml-loader": "2.1.0"
   },
   "devDependencies": {
