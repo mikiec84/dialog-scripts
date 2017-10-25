@@ -75,7 +75,7 @@ module.exports = {
           buildResources: path.join(config.desktop.root, 'assets')
         },
         // eslint-disable-next-line no-template-curly-in-string
-        artifactName: '${os}-${arch}-${version}.${ext}',
+        // artifactName: '${os}-${arch}-${version}.${ext}',
         appId: config.desktop.appId,
         copyright: config.desktop.copyright,
         mac: {
