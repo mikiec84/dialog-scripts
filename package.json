@@ -31,12 +31,12 @@
     "babel-loader": "7.1.2",
     "bluebird": "3.5.1",
     "build-number": "1.0.0",
-    "chalk": "2.1.0",
+    "chalk": "2.3.0",
     "commander": "2.11.0",
     "compression-webpack-plugin": "0.4.0",
     "css-loader": "0.28.7",
     "duplicate-package-checker-webpack-plugin": "1.2.6",
-    "electron-builder": "19.35.0",
+    "electron-builder": "19.41.0",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "generate-json-webpack-plugin": "0.2.2",
@@ -51,9 +51,9 @@
     "url-loader": "0.6.2",
     "val-loader": "1.0.2",
     "webpack": "2.7.0",
-    "webpack-dev-server": "2.9.1",
+    "webpack-dev-server": "2.9.3",
     "webpack-sentry-plugin": "1.14.0",
-    "worker-loader": "1.0.0",
+    "worker-loader": "1.1.0",
     "yml-loader": "2.1.0"
   },
   "devDependencies": {
@@ -64,6 +64,6 @@
     "babel-plugin-transform-flow-comments": "6.22.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "eslint": "4.8.0",
-    "flow-bin": "0.56.0"
+    "flow-bin": "0.57.3"
   }
 }
