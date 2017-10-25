@@ -6,7 +6,6 @@
 const path = require('path');
 const webpackBuild = require('../webpack/build');
 const electronBuild = require('../electron/build');
-const electronPublish = require('../electron/deploy');
 const logger = require('../utils/logger');
 const loadDialogConfig = require('./utils/loadDialogConfig');
 const shellExec = require('./utils/shellExec');
@@ -63,10 +62,12 @@ module.exports = {
     }
 
     logger.info('Start electron build');
-    const binaries = await electronBuild(config.desktop.platforms, {
+
+    await electronBuild(config.desktop.platforms, {
       projectDir: config.desktop.root,
       config: {
         forceCodeSigning: args.forceSign,
+        publish: (args.publish && config.desktop.configurePublish && config.desktop.configurePublish()) || undefined,
         electronVersion: detectElectronVersion(config.desktop.root),
         directories: {
           app: config.desktop.output,
@@ -85,19 +86,5 @@ module.exports = {
         }
       }
     });
-
-    if (args.publish) {
-      const publishConfig = config.desktop.configurePublish && config.desktop.configurePublish();
-      if (!publishConfig) {
-        throw new Error('Publish config not specified');
-      }
-
-      logger.info('Start app publishing');
-      await electronPublish(binaries, {
-        ...publishConfig,
-        version: config.desktop.version,
-        channel: args.channel || 'stable'
-      });
-    }
   }
 };
