@@ -37,6 +37,7 @@
     "css-loader": "0.28.7",
     "duplicate-package-checker-webpack-plugin": "1.2.6",
     "electron-builder": "19.41.0",
+    "electron-publisher-s3": "19.40.0",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "generate-json-webpack-plugin": "0.2.2",

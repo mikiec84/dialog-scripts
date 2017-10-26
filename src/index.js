@@ -3,6 +3,8 @@
  * @flow
  */
 
+require('./monkeypatch');
+
 module.exports = {
   createWebWebpackConfig: require('./web/createWebpackConfig'),
   createDesktopWebpackConfig: require('./electron/createWebpackConfig'),

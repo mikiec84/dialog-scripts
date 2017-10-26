@@ -3,6 +3,7 @@
  * @flow
  */
 
+require('../monkeypatch');
 const program = require('commander');
 const Promise = require('bluebird');
 
