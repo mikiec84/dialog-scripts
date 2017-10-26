@@ -23,7 +23,8 @@ async function createLatestArtifact(result: BuildResult, version: string, option
       await s3.copyObjectAsync({
         Bucket: options.bucket,
         CopySource: `${options.bucket}/${baseName}`,
-        Key: baseName.replace(version, 'latest')
+        Key: baseName.replace(version, 'latest'),
+        ACL: 'public-read'
       });
     }
   }
