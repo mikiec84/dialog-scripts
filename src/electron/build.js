@@ -40,7 +40,9 @@ function getTaskByPlatform(platform: PlatformType): mixed[] {
   }
 }
 
-async function build(platforms: PlatformType[], config: Object): Promise<Array<[string, string]>> {
+export type BuildResult = Array<{ paths: string[], platform: string }>;
+
+async function build(platforms: PlatformType[], config: Object): Promise<BuildResult> {
   const result = [];
 
   const tasks = platforms.map((platform) => getTaskByPlatform(platform));
@@ -49,11 +51,11 @@ async function build(platforms: PlatformType[], config: Object): Promise<Array<[
     platform,
     targets
   ] of tasks) {
-    const [path] = await _build({ ...config, targets });
-    result.push([
-      platform,
-      path
-    ]);
+    const paths = await _build({ ...config, targets });
+    result.push({
+      paths,
+      platform
+    });
   }
 
   return result;

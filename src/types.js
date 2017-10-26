@@ -35,11 +35,13 @@ export type WebOptions = {
 
 export type PlatformType = 'macos' | 'deb' | 'rpm' | 'linux' | 'windows';
 
-export type DesktopPublishOptions = {
-  url: string,
-  username: string,
-  password: string
+type S3PublishOptions = {
+  provider: 's3',
+  bucket: string,
+  acl: ?string
 };
+
+export type DesktopPublishOptions = S3PublishOptions;
 
 export type DesktopOptions = {
   root: string,

@@ -11,6 +11,7 @@ const loadDialogConfig = require('./utils/loadDialogConfig');
 const shellExec = require('./utils/shellExec');
 const createWebpackConfig = require('../electron/createWebpackConfig');
 const detectElectronVersion = require('../electron/detectElectronVersion');
+const createLatestArtifact = require('../electron/createLatestArtifacts');
 
 module.exports = {
   name: 'build-desktop',
@@ -63,12 +64,14 @@ module.exports = {
 
     logger.info('Start electron build');
 
-    await electronBuild(config.desktop.platforms, {
+    const publish = (args.publish && config.desktop.configurePublish && config.desktop.configurePublish()) || undefined;
+
+    const result = await electronBuild(config.desktop.platforms, {
       projectDir: config.desktop.root,
       publish: args.publish ? 'always' : 'never',
       config: {
+        publish,
         forceCodeSigning: args.forceSign,
-        publish: (args.publish && config.desktop.configurePublish && config.desktop.configurePublish()) || undefined,
         electronVersion: detectElectronVersion(config.desktop.root),
         directories: {
           app: config.desktop.output,
@@ -87,5 +90,9 @@ module.exports = {
         }
       }
     });
+
+    if (publish && publish.provider === 's3') {
+      await createLatestArtifact(result, config.desktop.version, publish);
+    }
   }
 };
