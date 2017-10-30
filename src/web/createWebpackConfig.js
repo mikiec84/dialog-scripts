@@ -9,6 +9,7 @@ const getVersion = require('./getVersion');
 const configureOutput = require('./configureOutput');
 const configureRules = require('./configureRules');
 const configurePlugins = require('./configurePlugins');
+const configureAlias = require('./configureAlias');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
@@ -31,13 +32,7 @@ function createWebpackConfig(options: WebOptions) {
       rules: configureRules(options)
     },
     resolve: {
-      alias: {
-        'react': resolve(options.root, 'node_modules/react'),
-        'react-dom': resolve(options.root, 'node_modules/react-dom'),
-        'core-js': resolve(options.root, 'node_modules/core-js'),
-        'immutable': resolve(options.root, 'node_modules/immutable'),
-        'raven-js': resolve(options.root, 'node_modules/raven-js')
-      }
+      alias: configureAlias(options)
     },
     plugins: configurePlugins(options),
     devServer: {
