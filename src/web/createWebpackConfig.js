@@ -10,6 +10,7 @@ const configureOutput = require('./configureOutput');
 const configureRules = require('./configureRules');
 const configurePlugins = require('./configurePlugins');
 const configureAlias = require('./configureAlias');
+const configureDevTool = require('./configureDevTool');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
@@ -38,7 +39,7 @@ function createWebpackConfig(options: WebOptions) {
     devServer: {
       port: 3000
     },
-    devtool: 'source-map',
+    devtool: configureDevTool(options),
     target: 'web',
     node: {
       fs: 'empty',

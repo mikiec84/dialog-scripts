@@ -31,6 +31,7 @@ export type WebOptions = {
   cssPrefix: string,
   environment: string,
   gzip?: boolean,
+  devtool?: string | boolean,
   configureSentry?: () => SentryConfig
 };
 
