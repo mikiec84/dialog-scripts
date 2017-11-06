@@ -199,15 +199,16 @@ anymatch@^1.3.0:
     micromatch "^2.1.5"
     normalize-path "^2.0.0"
 
-app-package-builder@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/app-package-builder/-/app-package-builder-1.5.0.tgz#3263598b07ac577b3df2205171a449f2dd5f30ca"
+app-package-builder@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/app-package-builder/-/app-package-builder-1.3.1.tgz#191eddb4e3f8be754f77469994447bed3891449e"
   dependencies:
     bluebird-lst "^1.0.5"
-    builder-util "^3.2.1"
-    builder-util-runtime "^3.1.0"
+    builder-util "^3.0.13"
+    builder-util-runtime "^2.3.0"
     fs-extra-p "^4.4.4"
     int64-buffer "^0.1.9"
+    js-yaml "^3.10.0"
     rabin-bindings "~1.7.3"
 
 aproba@^1.0.3:
@@ -348,7 +349,7 @@ autoprefixer@^6.0.2, autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@^2.145.0:
+aws-sdk@^2.140.0:
   version "2.145.0"
   resolved "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.145.0.tgz#085bb4553231defd93b96b0d95023717c9c3c093"
   dependencies:
@@ -1205,22 +1206,52 @@ build-number@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/build-number/-/build-number-1.0.0.tgz#d554558d556433c4eb3ac5138c399ed7406cc1b2"
 
-builder-util-runtime@3.1.0, builder-util-runtime@^3.0.0, builder-util-runtime@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/builder-util-runtime/-/builder-util-runtime-3.1.0.tgz#60ec66d3c49f028655230a09d7767e77ff6f15b8"
+builder-util-runtime@2.5.0, builder-util-runtime@^2.3.0, builder-util-runtime@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.npmjs.org/builder-util-runtime/-/builder-util-runtime-2.5.0.tgz#22373d4faab8d89e0b077630aef76538deb38476"
   dependencies:
     bluebird-lst "^1.0.5"
     debug "^3.1.0"
     fs-extra-p "^4.4.4"
     sax "^1.2.4"
 
-builder-util@3.2.1, builder-util@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/builder-util/-/builder-util-3.2.1.tgz#3b4f4df06cc30307a89343caa0dd361eae363ba5"
+builder-util-runtime@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/builder-util-runtime/-/builder-util-runtime-3.2.0.tgz#b946032b61c940533fa5e8f05afc550b8e56c94c"
+  dependencies:
+    bluebird-lst "^1.0.5"
+    debug "^3.1.0"
+    fs-extra-p "^4.4.4"
+    sax "^1.2.4"
+
+builder-util@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/builder-util/-/builder-util-3.1.1.tgz#3b8e198bdb239f6c70958b182753689af6e7dfef"
   dependencies:
     "7zip-bin" "^2.2.7"
     bluebird-lst "^1.0.5"
-    builder-util-runtime "^3.0.0"
+    builder-util-runtime "^2.5.0"
+    chalk "^2.3.0"
+    debug "^3.1.0"
+    fs-extra-p "^4.4.4"
+    ini "^1.3.4"
+    is-ci "^1.0.10"
+    js-yaml "^3.10.0"
+    lazy-val "^1.0.2"
+    node-emoji "^1.8.1"
+    semver "^5.4.1"
+    source-map-support "^0.5.0"
+    stat-mode "^0.2.2"
+    temp-file "^2.0.3"
+    tunnel-agent "^0.6.0"
+
+builder-util@^3.0.13, builder-util@^3.1.1:
+  version "3.2.2"
+  resolved "https://registry.npmjs.org/builder-util/-/builder-util-3.2.2.tgz#9660f74f168f6d4e175ca3c25c8e0d0ed7ff965c"
+  dependencies:
+    "7zip-bin" "^2.2.7"
+    bluebird-lst "^1.0.5"
+    builder-util-runtime "^3.2.0"
     chalk "^2.3.0"
     debug "^3.1.0"
     fs-extra-p "^4.4.4"
@@ -1814,6 +1845,10 @@ csso@~2.3.1:
     clap "^1.0.9"
     source-map "^0.5.3"
 
+cuint@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/cuint/-/cuint-0.2.2.tgz#408086d409550c2631155619e9fa7bcadc3b991b"
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -1939,12 +1974,12 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dmg-builder@2.1.6:
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/dmg-builder/-/dmg-builder-2.1.6.tgz#a37f0c8360794a7051a30a571582968cb1e3ce30"
+dmg-builder@2.1.3:
+  version "2.1.3"
+  resolved "https://registry.npmjs.org/dmg-builder/-/dmg-builder-2.1.3.tgz#823b0560314312e59725ec779a4373d051ae1617"
   dependencies:
     bluebird-lst "^1.0.5"
-    builder-util "^3.2.1"
+    builder-util "^3.0.13"
     debug "^3.1.0"
     fs-extra-p "^4.4.4"
     iconv-lite "^0.4.19"
@@ -2072,25 +2107,26 @@ ejs@^2.5.7:
   version "2.5.7"
   resolved "https://registry.npmjs.org/ejs/-/ejs-2.5.7.tgz#cc872c168880ae3c7189762fd5ffc00896c9518a"
 
-electron-builder@19.45.0:
-  version "19.45.0"
-  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-19.45.0.tgz#4a4d9eef6fa2b94d35f5a6e124e0305257a0c0f6"
+electron-builder@19.42.1:
+  version "19.42.1"
+  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-19.42.1.tgz#77db9ba516a5aa0eae194b2fa88626b653535095"
   dependencies:
     "7zip-bin" "^2.2.7"
-    app-package-builder "1.5.0"
+    app-package-builder "1.3.1"
     asar-integrity "0.2.3"
     async-exit-hook "^2.0.1"
     bluebird-lst "^1.0.5"
-    builder-util "3.2.1"
-    builder-util-runtime "3.1.0"
+    builder-util "3.1.1"
+    builder-util-runtime "2.5.0"
     chalk "^2.3.0"
     chromium-pickle-js "^0.2.0"
+    cuint "^0.2.2"
     debug "^3.1.0"
-    dmg-builder "2.1.6"
+    dmg-builder "2.1.3"
     ejs "^2.5.7"
     electron-download-tf "4.3.4"
     electron-osx-sign "0.4.7"
-    electron-publish "19.45.0"
+    electron-publish "19.42.0"
     fs-extra-p "^4.4.4"
     hosted-git-info "^2.5.0"
     is-ci "^1.0.10"
@@ -2132,25 +2168,25 @@ electron-osx-sign@0.4.7:
     minimist "^1.2.0"
     plist "^2.1.0"
 
-electron-publish@19.45.0, electron-publish@~19.45.0:
-  version "19.45.0"
-  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-19.45.0.tgz#7cdcf4f54dd821bffaf4dcc59b21223cfbd8ac4c"
+electron-publish@19.42.0, electron-publish@~19.42.0:
+  version "19.42.0"
+  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-19.42.0.tgz#d8744d20626d6c7b237547508f332b2999cecda5"
   dependencies:
     bluebird-lst "^1.0.5"
-    builder-util "^3.2.1"
-    builder-util-runtime "^3.1.0"
+    builder-util "^3.1.1"
+    builder-util-runtime "^2.5.0"
     chalk "^2.3.0"
     fs-extra-p "^4.4.4"
     mime "^2.0.3"
 
-electron-publisher-s3@19.45.0:
-  version "19.45.0"
-  resolved "https://registry.npmjs.org/electron-publisher-s3/-/electron-publisher-s3-19.45.0.tgz#5ad69dce16f8adaabac603eb0fd84666872f6215"
+electron-publisher-s3@19.42.0:
+  version "19.42.0"
+  resolved "https://registry.npmjs.org/electron-publisher-s3/-/electron-publisher-s3-19.42.0.tgz#231e4c2c3d3c90ad1d880a3049c875d42a98a31d"
   dependencies:
-    aws-sdk "^2.145.0"
+    aws-sdk "^2.140.0"
     bluebird-lst "^1.0.5"
-    builder-util "^3.2.1"
-    electron-publish "~19.45.0"
+    builder-util "^3.1.1"
+    electron-publish "~19.42.0"
     fs-extra-p "^4.4.4"
     mime "^2.0.3"
 

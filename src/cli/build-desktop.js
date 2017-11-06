@@ -82,8 +82,7 @@ module.exports = {
         appId: config.desktop.appId,
         copyright: config.desktop.copyright,
         mac: {
-          category: 'public.app-category.social-networking',
-          electronUpdaterCompatibility: '>=1.0.0'
+          category: 'public.app-category.social-networking'
         },
         protocols: {
           name: config.desktop.productName + ' URL',
