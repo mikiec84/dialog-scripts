@@ -4,30 +4,29 @@
  */
 
 import type { DesktopPublishOptions } from '../types';
-import type { BuildResult } from './build';
 const path = require('path');
 const Promise = require('bluebird');
 const S3 = require('aws-sdk/clients/s3');
 
-async function createLatestArtifact(result: BuildResult, version: string, options: DesktopPublishOptions) {
+async function createLatestArtifact(result: string[], version: string, options: DesktopPublishOptions) {
   const s3 = Promise.promisifyAll(new S3({
     signatureVersion: 'v4',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   }));
 
-  for (const item of result) {
-    for (const fileName of item.paths) {
-      const baseName = path.basename(fileName);
+  await Promise.map(result, (fileName) => {
+    const baseName = path.basename(fileName);
 
-      await s3.copyObjectAsync({
-        Bucket: options.bucket,
-        CopySource: `${options.bucket}/${baseName}`,
-        Key: baseName.replace(version, 'latest'),
-        ACL: 'public-read'
-      });
-    }
-  }
+    return s3.copyObjectAsync({
+      Bucket: options.bucket,
+      CopySource: `${options.bucket}/${baseName}`,
+      Key: baseName.replace(version, 'latest'),
+      ACL: 'public-read'
+    });
+  }, {
+    concurrency: 1
+  });
 }
 
 module.exports = createLatestArtifact;

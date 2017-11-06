@@ -35,7 +35,22 @@ export type WebOptions = {
   configureSentry?: () => SentryConfig
 };
 
-export type PlatformType = 'macos' | 'deb' | 'rpm' | 'linux' | 'windows';
+export type PlatformType =
+  | 'macos'
+  | 'deb'
+  | 'deb_32'
+  | 'deb_64'
+  | 'rpm'
+  | 'rpm_32'
+  | 'rpm_64'
+  | 'linux'
+  | 'windows'
+  | 'nsis'
+  | 'nsis_32'
+  | 'nsis_64'
+  | 'msi'
+  | 'msi_32'
+  | 'msi_64';
 
 type S3PublishOptions = {
   provider: 's3',
