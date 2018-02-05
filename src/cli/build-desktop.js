@@ -67,8 +67,8 @@ module.exports = {
     const publish = (args.publish && config.desktop.configurePublish && config.desktop.configurePublish()) || undefined;
 
     const result = await electronBuild(config.desktop.platforms, {
+      publish: publish ? 'always' : 'never',
       projectDir: config.desktop.root,
-      publish: args.publish ? 'always' : 'never',
       config: {
         publish,
         forceCodeSigning: args.forceSign,
