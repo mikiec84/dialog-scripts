@@ -31,13 +31,13 @@
     "babel-loader": "7.1.2",
     "bluebird": "3.5.1",
     "build-number": "1.0.0",
-    "chalk": "2.3.0",
-    "commander": "2.13.0",
+    "chalk": "2.3.1",
+    "commander": "2.14.1",
     "compression-webpack-plugin": "0.4.0",
     "css-loader": "0.28.9",
     "duplicate-package-checker-webpack-plugin": "1.2.6",
-    "electron-builder": "19.56.0",
-    "electron-publisher-s3": "19.56.0",
+    "electron-builder": "20.0.4",
+    "electron-publisher-s3": "20.0.2",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "generate-json-webpack-plugin": "0.2.2",
@@ -64,7 +64,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
     "babel-plugin-transform-flow-comments": "6.22.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "eslint": "4.16.0",
-    "flow-bin": "0.64.0"
+    "eslint": "4.17.0",
+    "flow-bin": "0.65.0"
   }
 }
