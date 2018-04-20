@@ -55,7 +55,11 @@ export type PlatformType =
 type S3PublishOptions = {
   provider: 's3',
   bucket: string,
-  acl: ?string
+  region?: string,
+  acl?: 'private' | 'public-read',
+  endpoint?: string,
+  channel?: string,
+  path?: string
 };
 
 export type DesktopPublishOptions = S3PublishOptions;
