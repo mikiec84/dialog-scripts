@@ -3,7 +3,7 @@
  * @flow
  */
 
-const chalk = require('chalk');
+const { default: chalk } = require('chalk');
 const util = require('util');
 
 module.exports = {
@@ -20,7 +20,6 @@ module.exports = {
     console.error(chalk.red(util.format(...args)));
   },
   trace(error: Error) {
-    console.trace(chalk.red(error));
+    console.trace(chalk.red(error.message + '\n' + error.stack));
   }
 };
-
