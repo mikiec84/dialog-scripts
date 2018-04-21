@@ -13,6 +13,7 @@ async function createLatestArtifact(result: string[], version: string, options: 
     region: options.region,
     endpoint: options.endpoint,
     signatureVersion: 'v4',
+    s3ForcePathStyle: Boolean(options.endpoint),
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   }));
