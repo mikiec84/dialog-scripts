@@ -3,7 +3,7 @@
  * @flow
  */
 
-const { default: chalk } = require('chalk');
+const chalk = require('chalk');
 const util = require('util');
 
 module.exports = {

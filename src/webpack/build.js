@@ -4,7 +4,7 @@
  */
 
 const webpack = require('webpack');
-const { default: chalk } = require('chalk');
+const chalk = require('chalk');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const logger = require('../utils/logger');
 
