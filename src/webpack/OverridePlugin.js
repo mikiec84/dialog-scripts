@@ -10,9 +10,11 @@ type OverrideConfig = {
 };
 
 class OverridePlugin {
+  root: string;
   config: OverrideConfig;
 
   constructor(root: string, override: OverrideConfig) {
+    this.root = root;
     this.config = {};
 
     Object.keys(override).forEach((_from) => {
@@ -29,7 +31,17 @@ class OverridePlugin {
     resolver.plugin('normal-module-factory', (nmf) => {
       nmf.plugin('before-resolve', (result, callback) => {
         if (result) {
-          const realRequest = path.join(result.context, result.request);
+          let realRequest = null;
+          if (result.request[0] === '.') {
+            // relative paths
+            realRequest = path.join(result.context, result.request);
+          } else if (result.context.indexOf('node_modules') >= 0) {
+            // import from dependant module
+            realRequest = path.join(this.root, 'node_modules', result.request);
+          } else {
+            realRequest = result.request;
+          }
+
           const fakeRequest = this.config[realRequest];
           if (fakeRequest) {
             result.request = fakeRequest;
