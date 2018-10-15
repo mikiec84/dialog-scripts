@@ -8,11 +8,7 @@ import type { WebOptions } from '../types';
 const {
   DefinePlugin,
   EnvironmentPlugin,
-  LoaderOptionsPlugin,
-  optimize: {
-    UglifyJsPlugin,
-    CommonsChunkPlugin
-  }
+  LoaderOptionsPlugin
 } = require('webpack');
 const HTMLPlugin = require('html-webpack-plugin');
 const SentryPlugin = require('webpack-sentry-plugin');
@@ -20,7 +16,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const OverridePlugin = require('../webpack/OverridePlugin');
-const resolve = require('../utils/resolve');
+
 
 function configurePlugins(options: WebOptions) {
   const plugins = [];
@@ -48,32 +44,10 @@ function configurePlugins(options: WebOptions) {
 
   plugins.push(new OverridePlugin(options.root, options.override));
 
-  plugins.push(new CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: Infinity
-  }));
 
   plugins.push(new DuplicatePackageCheckerPlugin());
 
   if (options.environment === 'production') {
-    plugins.push(new UglifyJsPlugin({
-      sourceMap: true,
-      beautify: false,
-      comments: false,
-      compress: {
-        screw_ie8: true,
-        warnings: false
-      },
-      mangle: {
-        screw_ie8: true
-      },
-      output: {
-        comments: false,
-        screw_ie8: true
-      },
-      exclude: [resolve(options.root, 'node_modules/@dlghq/dialog-java-core/core.js')]
-    }));
-
     plugins.push(new ExtractTextPlugin({
       filename: '[name].[contenthash].css'
     }));
