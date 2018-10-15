@@ -21,8 +21,7 @@
     "release": "git push --follow-tags",
     "preversion": "npm test",
     "postversion": "npm run release",
-    "prerelease": "npm run build",
-    "postrelease": "npm publish"
+    "prerelease": "npm run build"
   },
   "dependencies": {
     "@dlghq/babel-preset-dialog": "3.4.3",
