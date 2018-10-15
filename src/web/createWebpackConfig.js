@@ -25,6 +25,9 @@ function createWebpackConfig(options: WebOptions) {
       ],
       vendor: ['@dlghq/dialog-java-core']
     },
+    optimization: {
+      minimize: process.env.NODE_ENV === 'production'
+    },
     output: configureOutput(options),
     resolveLoader: {
       moduleExtensions: ['-loader']
