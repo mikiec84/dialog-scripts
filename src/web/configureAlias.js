@@ -14,7 +14,8 @@ function configureAlias(options: WebOptions) {
     'immutable',
     'raven-js',
     'screenfull',
-    'hoist-non-react-statics'
+    'hoist-non-react-statics',
+    'lodash',
   ];
 
   if (options.alias) {
