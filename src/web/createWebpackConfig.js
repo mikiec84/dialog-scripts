@@ -19,36 +19,33 @@ function createWebpackConfig(options: WebOptions) {
   return {
     context: resolve(options.root),
     entry: {
-      app: [
-        options.entry.js,
-        options.entry.css
-      ],
-      vendor: ['@dlghq/dialog-java-core']
+      app: [options.entry.js, options.entry.css],
+      vendor: ['@dlghq/dialog-java-core'],
     },
     optimization: {
-      minimize: process.env.NODE_ENV === 'production'
+      minimize: process.env.NODE_ENV === 'production',
     },
     output: configureOutput(options),
     resolveLoader: {
-      moduleExtensions: ['-loader']
+      moduleExtensions: ['-loader'],
     },
     module: {
-      rules: configureRules(options)
+      rules: configureRules(options),
     },
     resolve: {
-      alias: configureAlias(options)
+      alias: configureAlias(options),
     },
     plugins: configurePlugins(options),
     devServer: {
-      port: 3000
+      port: 3000,
     },
     devtool: configureDevTool(options),
     target: 'web',
     node: {
       fs: 'empty',
       net: 'empty',
-      tls: 'empty'
-    }
+      tls: 'empty',
+    },
   };
 }
 

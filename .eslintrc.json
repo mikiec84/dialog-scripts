@@ -1,5 +1,5 @@
 {
-  "extends": "@dlghq/eslint-config-dialog/base",
+  "extends": ["@dlghq/eslint-config-dialog/base", "prettier"],
   "rules": {
     "no-sync": 0,
     "no-console": 0,

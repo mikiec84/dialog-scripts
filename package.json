@@ -21,7 +21,8 @@
     "release": "git push --follow-tags",
     "preversion": "npm test",
     "postversion": "npm run release",
-    "prerelease": "npm run build"
+    "prerelease": "npm run build",
+    "fmt": "prettier --write \"src/**/*.{js,json,css}\""
   },
   "dependencies": {
     "@dlghq/babel-preset-dialog": "3.4.3",

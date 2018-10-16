@@ -21,5 +21,5 @@ module.exports = {
   },
   trace(error: Error) {
     console.trace(chalk.red(error.message + '\n' + error.stack));
-  }
+  },
 };

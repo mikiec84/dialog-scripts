@@ -7,7 +7,7 @@ const { exec } = require('child_process');
 
 type Result = {
   stdout: string,
-  stderr: string
+  stderr: string,
 };
 
 function shellExec(command: string): Promise<Result> {

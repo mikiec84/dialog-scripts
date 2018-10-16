@@ -7,7 +7,7 @@ import type { WebOptions, DesktopOptions } from '../../types';
 
 type DialogConfig = {
   web: WebOptions,
-  desktop: DesktopOptions
+  desktop: DesktopOptions,
 };
 
 function loadDialogConfig(): DialogConfig {
