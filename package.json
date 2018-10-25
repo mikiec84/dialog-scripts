@@ -1,6 +1,6 @@
 {
   "name": "@dlghq/dialog-scripts",
-  "version": "0.18.2-webpack4.alpha.0",
+  "version": "0.18.2-webpack4.0",
   "main": "lib/index.js",
   "files": [
     "lib",
