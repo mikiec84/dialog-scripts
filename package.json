@@ -25,9 +25,9 @@
     "fmt": "prettier --write \"src/**/*.{js,json,css}\""
   },
   "dependencies": {
-    "@dlghq/babel-preset-dialog": "3.4.3",
-    "@dlghq/postcss-dialog": "1.11.1",
     "@babel/core": "7.1.2",
+    "@dlghq/babel-preset-dialog": "4.0.0-babel-7.2",
+    "@dlghq/postcss-dialog": "1.11.1",
     "babel-loader": "8.0.4",
     "bluebird": "3.5.2",
     "build-number": "1.0.0",
