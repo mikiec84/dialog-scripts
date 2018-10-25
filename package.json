@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "@babel/core": "7.1.2",
-    "@dlghq/babel-preset-dialog": "4.0.0-babel-7.2",
+    "@babel/runtime": "7.1.2",
+    "@dlghq/babel-preset-dialog": "4.0.0-babel7.2",
     "@dlghq/postcss-dialog": "1.11.1",
     "babel-loader": "8.0.4",
     "bluebird": "3.5.2",
@@ -62,6 +63,7 @@
     "@babel/plugin-syntax-flow": "7.0.0",
     "@babel/plugin-transform-flow-comments": "7.0.0",
     "@babel/plugin-transform-flow-strip-types": "7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/traverse": "7.1.4",
     "@dlghq/eslint-config-dialog": "3.4.0",
