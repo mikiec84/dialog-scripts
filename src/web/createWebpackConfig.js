@@ -18,6 +18,7 @@ function createWebpackConfig(options: WebOptions) {
 
   return {
     context: resolve(options.root),
+    mode: process.env.NODE_ENV,
     entry: {
       app: [options.entry.js, options.entry.css],
       vendor: ['@dlghq/dialog-java-core'],
