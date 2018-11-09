@@ -81,6 +81,7 @@ module.exports = {
         artifactName: '${name}-${os}-${arch}-${version}.${ext}',
         appId: config.desktop.appId,
         copyright: config.desktop.copyright,
+        extraResources: config.desktop.extraResources ? config.desktop.extraResources : [],
         mac: {
           category: 'public.app-category.social-networking',
           electronUpdaterCompatibility: '>=1.0.0'
