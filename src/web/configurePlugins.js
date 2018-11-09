@@ -16,6 +16,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const OverridePlugin = require('../webpack/OverridePlugin');
+const resolve = require('../utils/resolve');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function configurePlugins(options: WebOptions) {
   const plugins = [];
@@ -50,6 +52,15 @@ function configurePlugins(options: WebOptions) {
   );
 
   plugins.push(new OverridePlugin(options.root, options.override));
+
+  if (options.copyWebpack) {
+    plugins.push(new CopyWebpackPlugin(options.copyWebpack.patterns, options.copyWebpack.options));
+  }
+
+  plugins.push(new CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: Infinity
+  }));
 
   plugins.push(new DuplicatePackageCheckerPlugin());
 

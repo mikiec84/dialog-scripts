@@ -36,6 +36,7 @@
     "commander": "2.19.0",
     "compression-webpack-plugin": "2.0.0",
     "css-loader": "1.0.0",
+    "copy-webpack-plugin": "^4.5.4",
     "duplicate-package-checker-webpack-plugin": "1.2.6",
     "electron-builder": "20.28.4",
     "electron-publisher-s3": "20.17.2",
