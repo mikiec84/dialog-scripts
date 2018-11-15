@@ -104,22 +104,19 @@ function configureModuleRules(options: WebOptions) {
     // global
     rules.push({
       test: /\.css$/,
-      use: MiniCssExtractPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            modules: false,
+            importLoaders: 1,
           },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false,
-              importLoaders: 1,
-            },
-          },
-          configurePostCSS(options),
-        ],
-      }),
+        },
+        configurePostCSS(options),
+      ],
       include: [
         ...toArray(options.paths.styles),
         resolve(
@@ -132,23 +129,20 @@ function configureModuleRules(options: WebOptions) {
     // css-modules
     rules.push({
       test: /\.css$/,
-      use: MiniCssExtractPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            importLoaders: 1,
+            localIdentName: `${options.cssPrefix}-[sha1:hash:hex]`,
           },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: `${options.cssPrefix}-[sha1:hash:hex]`,
-            },
-          },
-          configurePostCSS(options),
-        ],
-      }),
+        },
+        configurePostCSS(options),
+      ],
       include: [
         ...toArray(options.paths.cssModules),
         resolve(options.root, 'node_modules/@dlghq'),

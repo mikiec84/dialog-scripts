@@ -28,7 +28,7 @@
     "@babel/core": "7.1.2",
     "@babel/runtime": "7.1.2",
     "@dlghq/babel-preset-dialog": "4.0.0-babel7.6",
-    "@dlghq/postcss-dialog": "1.11.1",
+    "@dlghq/postcss-dialog": "1.12.0",
     "babel-loader": "8.0.4",
     "bluebird": "3.5.2",
     "build-number": "1.0.0",
