@@ -12,9 +12,10 @@ const {
 } = require('webpack');
 const HTMLPlugin = require('html-webpack-plugin');
 const SentryPlugin = require('webpack-sentry-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const OverridePlugin = require('../webpack/OverridePlugin');
 const resolve = require('../utils/resolve');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -66,7 +67,7 @@ function configurePlugins(options: WebOptions) {
 
   if (options.environment === 'production') {
     plugins.push(
-      new ExtractTextPlugin({
+      new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css',
       }),
     );

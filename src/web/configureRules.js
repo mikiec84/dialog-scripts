@@ -3,11 +3,11 @@
  * @flow
  */
 
-import type { WebOptions } from '../types';
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const resolve = require('../utils/resolve');
 const configurePostCSS = require('./configurePostCSS');
+import type { WebOptions } from '../types';
 
 function toArray<T>(value: ?(T | Array<T>)): Array<T> {
   if (value) {
@@ -104,9 +104,12 @@ function configureModuleRules(options: WebOptions) {
     // global
     rules.push({
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
+      use: MiniCssExtractPlugin.extract({
         fallback: 'style-loader',
         use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
           {
             loader: 'css-loader',
             options: {
@@ -129,9 +132,12 @@ function configureModuleRules(options: WebOptions) {
     // css-modules
     rules.push({
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
+      use: MiniCssExtractPlugin.extract({
         fallback: 'style-loader',
         use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
           {
             loader: 'css-loader',
             options: {
