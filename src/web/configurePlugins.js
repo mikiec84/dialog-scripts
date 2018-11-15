@@ -55,13 +55,13 @@ function configurePlugins(options: WebOptions) {
   plugins.push(new OverridePlugin(options.root, options.override));
 
   if (options.copyWebpack) {
-    plugins.push(new CopyWebpackPlugin(options.copyWebpack.patterns, options.copyWebpack.options));
+    plugins.push(
+      new CopyWebpackPlugin(
+        options.copyWebpack.patterns,
+        options.copyWebpack.options,
+      ),
+    );
   }
-
-  plugins.push(new CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: Infinity
-  }));
 
   plugins.push(new DuplicatePackageCheckerPlugin());
 
