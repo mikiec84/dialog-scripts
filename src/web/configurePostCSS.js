@@ -24,6 +24,7 @@ function configurePostCSSRule(options: WebOptions) {
     options: {
       plugins() {
         return postcss({
+          stage: 0,
           import: {
             resolve(id: string, base: string): string {
               if (
