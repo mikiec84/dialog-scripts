@@ -10,6 +10,16 @@ export type SentryConfig = {
   organisation: string,
 };
 
+export type CopyWebpackPluginConfig = {
+  patterns: Array<Object|string>,
+  options: {
+    debug:	string,
+    ignore: Array<string>,
+    context: string,
+    copyUnmodified: boolean
+  }
+};
+
 export type WebOptions = {
   root: string,
   entry: {
@@ -33,6 +43,7 @@ export type WebOptions = {
   gzip?: boolean,
   devtool?: string | boolean,
   configureSentry?: () => SentryConfig,
+  copyWebpack?: CopyWebpackPluginConfig
 };
 
 export type PlatformType =
@@ -82,4 +93,5 @@ export type DesktopOptions = {
   schema: string,
   platforms: PlatformType[],
   configurePublish?: () => ?DesktopPublishOptions,
+  extraResources?: Array<string> | string
 };

@@ -15,9 +15,7 @@ const SentryPlugin = require('webpack-sentry-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const OverridePlugin = require('../webpack/OverridePlugin');
-const resolve = require('../utils/resolve');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function configurePlugins(options: WebOptions) {
