@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/core": "7.1.6",
     "@babel/runtime": "7.1.5",
-    "@dlghq/babel-preset-dialog": "4.0.0",
+    "@dlghq/babel-preset-dialog": "4.0.1-3",
     "@dlghq/postcss-dialog": "1.12.1-2",
     "babel-loader": "8.0.4",
     "bluebird": "3.5.3",
@@ -45,7 +45,7 @@
     "html-webpack-plugin": "3.2.0",
     "json-loader": "0.5.7",
     "lodash": "4.17.11",
-    "mini-css-extract-plugin": "0.4.4",
+    "mini-css-extract-plugin": "0.4.5",
     "postcss-loader": "3.0.0",
     "progress-bar-webpack-plugin": "1.11.0",
     "raw-loader": "0.5.1",
@@ -73,7 +73,7 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "eslint": "5.9.0",
     "eslint-config-prettier": "3.3.0",
-    "flow-bin": "0.81.0",
+    "flow-bin": "0.86.0",
     "prettier": "1.15.2"
   }
 }
