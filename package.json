@@ -25,7 +25,7 @@
     "postrelease": "npm publish"
   },
   "dependencies": {
-    "@dlghq/babel-preset-dialog": "3.4.3",
+    "@dlghq/babel-preset-dialog": "3.5.0",
     "@dlghq/postcss-dialog": "1.11.1",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
