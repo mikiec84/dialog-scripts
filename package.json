@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/core": "7.1.6",
     "@babel/runtime": "7.1.5",
-    "@dlghq/babel-preset-dialog": "4.0.1-env.7",
+    "@dlghq/babel-preset-dialog": "4.0.1-env.8",
     "@dlghq/postcss-dialog": "1.12.1-2",
     "babel-loader": "8.0.4",
     "bluebird": "3.5.3",
