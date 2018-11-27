@@ -25,6 +25,9 @@ function configurePlugins(options: WebOptions) {
     new LoaderOptionsPlugin({
       debug: options.environment === 'development',
       minimize: options.environment === 'production',
+      options: {
+        context: __dirname,
+      }
     }),
   );
 

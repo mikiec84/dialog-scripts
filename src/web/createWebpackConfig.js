@@ -11,6 +11,7 @@ const configureRules = require('./configureRules');
 const configurePlugins = require('./configurePlugins');
 const configureAlias = require('./configureAlias');
 const configureDevTool = require('./configureDevTool');
+const configureOptimization = require('./configureOptimization');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
@@ -23,9 +24,7 @@ function createWebpackConfig(options: WebOptions) {
       app: [options.entry.js, options.entry.css],
       vendor: ['@dlghq/dialog-java-core'],
     },
-    optimization: {
-      minimize: process.env.NODE_ENV === 'production',
-    },
+    optimization: configureOptimization(options),
     output: configureOutput(options),
     resolveLoader: {
       moduleExtensions: ['-loader'],
