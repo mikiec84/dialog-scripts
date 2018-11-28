@@ -18,5 +18,5 @@ module.exports = {
     const webConfig = createWebConfig(config.web);
 
     await build(webConfig);
-  }
+  },
 };

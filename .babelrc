@@ -1,17 +1,9 @@
 {
+  "presets": ["@babel/preset-env"],
   "plugins": [
-    "transform-flow-comments",
-    ["transform-object-rest-spread", {
-      "useBuiltIns": true
-    }],
-    ["transform-async-to-module-method", {
-      "module": "bluebird",
-      "method": "coroutine"
-    }],
-    ["transform-es2015-modules-commonjs", {
-      "loose": true,
-      "noInterop": true,
-      "allowTopLevelThis": true
-    }]
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-syntax-flow",
+    "@babel/plugin-transform-flow-strip-types",
+    "@babel/transform-flow-comments"
   ]
 }

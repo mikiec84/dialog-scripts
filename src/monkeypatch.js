@@ -1,7 +1,12 @@
-const { getS3LikeProviderBaseUrl } = require('builder-util-runtime/out/publishOptions');
+const {
+  getS3LikeProviderBaseUrl,
+} = require('builder-util-runtime/out/publishOptions');
 
 function patchedGetS3LikeProviderBaseUrl(configuration) {
-  if (configuration.provider === 's3' && typeof configuration.url === 'string') {
+  if (
+    configuration.provider === 's3' &&
+    typeof configuration.url === 'string'
+  ) {
     return configuration.url;
   }
 
@@ -9,5 +14,5 @@ function patchedGetS3LikeProviderBaseUrl(configuration) {
 }
 
 Object.assign(require('builder-util-runtime/out/publishOptions'), {
-  getS3LikeProviderBaseUrl: patchedGetS3LikeProviderBaseUrl
+  getS3LikeProviderBaseUrl: patchedGetS3LikeProviderBaseUrl,
 });

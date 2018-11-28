@@ -9,11 +9,14 @@ const Promise = require('bluebird');
 const builder = require('electron-builder');
 const createTargetByPlatform = require('./createTargetByPlatform');
 
-async function build(platforms: PlatformType[], config: Object): Promise<string[]> {
+async function build(
+  platforms: PlatformType[],
+  config: Object,
+): Promise<string[]> {
   const result = await Promise.map(
     platforms.map(createTargetByPlatform),
     (targets) => builder.build({ ...config, targets }),
-    { concurrency: 1 }
+    { concurrency: 1 },
   );
 
   return flatten(result);

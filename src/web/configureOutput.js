@@ -12,7 +12,7 @@ function configureOutput(options: WebOptions) {
       publicPath: './',
       filename: '[name].[hash].js',
       chunkFilename: '[id].[chunkhash].js',
-      sourceMapFilename: '[file].map'
+      sourceMapFilename: '[file].map',
     };
   }
 
@@ -20,7 +20,7 @@ function configureOutput(options: WebOptions) {
     path: options.output,
     pathinfo: true,
     publicPath: './',
-    filename: '[name].js'
+    filename: '[name].js',
   };
 }
 

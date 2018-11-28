@@ -17,18 +17,24 @@ function build(config: WebpackConfig | WebpackConfig[]): Promise<void> {
   return new Promise((resolve, reject) => {
     const compiler = webpack(config);
 
-    compiler.apply(new ProgressBarPlugin({
-      format: `  ${ccb('build')} ${ccb('[')}:bar${ccb(']')} ${cgb(':percent')} - :msg`
-    }));
+    compiler.apply(
+      new ProgressBarPlugin({
+        format: `  ${ccb('build')} ${ccb('[')}:bar${ccb(']')} ${cgb(
+          ':percent',
+        )} - :msg`,
+      }),
+    );
 
     compiler.run((error, stats) => {
       if (error) {
         reject(error);
       } else {
-        logger.log(stats.toString({
-          chunks: false,
-          colors: true
-        }));
+        logger.log(
+          stats.toString({
+            chunks: false,
+            colors: true,
+          }),
+        );
 
         resolve();
       }

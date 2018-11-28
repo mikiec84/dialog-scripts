@@ -24,20 +24,24 @@ function configurePostCSSRule(options: WebOptions) {
     options: {
       plugins() {
         return postcss({
+          stage: 0,
           import: {
             resolve(id: string, base: string): string {
-              if (base.startsWith(options.paths.styles) || base.startsWith(options.paths.cssModules)) {
+              if (
+                base.startsWith(options.paths.styles) ||
+                base.startsWith(options.paths.cssModules)
+              ) {
                 return id;
               }
 
               const fullName = id.startsWith('.') ? path.resolve(base, id) : id;
 
               return override[fullName] || id;
-            }
-          }
+            },
+          },
         });
-      }
-    }
+      },
+    },
   };
 }
 

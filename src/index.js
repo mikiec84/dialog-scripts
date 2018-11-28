@@ -8,5 +8,5 @@ require('./monkeypatch');
 module.exports = {
   createWebWebpackConfig: require('./web/createWebpackConfig'),
   createDesktopWebpackConfig: require('./electron/createWebpackConfig'),
-  buildDesktop: require('./electron/build')
+  buildDesktop: require('./electron/build'),
 };

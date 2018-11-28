@@ -3,11 +3,11 @@
  * @flow
  */
 
-import type { WebOptions } from '../types';
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const resolve = require('../utils/resolve');
 const configurePostCSS = require('./configurePostCSS');
+import type { WebOptions } from '../types';
 
 function toArray<T>(value: ?(T | Array<T>)): Array<T> {
   if (value) {
@@ -26,12 +26,15 @@ function configureModuleRules(options: WebOptions) {
 
   const valFiles = [
     ...toArray(options.paths.valFiles),
-    resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/messages-generate.js')
+    resolve(
+      options.root,
+      'node_modules/@dlghq/dialog-web-core/src/messages-generate.js',
+    ),
   ];
 
   rules.push({
     test: valFiles,
-    loader: 'val-loader'
+    loader: 'val-loader',
   });
 
   rules.push({
@@ -46,21 +49,21 @@ function configureModuleRules(options: WebOptions) {
           {
             modules: false,
             optimize: options.environment === 'production',
-            development: options.environment === 'development'
-          }
-        ]
-      ]
+            development: options.environment === 'development',
+          },
+        ],
+      ],
     },
     include: [
       ...toArray(options.paths.js),
       resolve(options.root, 'node_modules/@dlghq'),
       resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-components')
+      resolve(options.root, 'node_modules/@dlghq/dialog-components'),
     ],
     exclude: [
       ...valFiles,
-      resolve(options.root, 'node_modules/@dlghq/dialog-java-core')
-    ]
+      resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
+    ],
   });
 
   rules.push({
@@ -78,75 +81,81 @@ function configureModuleRules(options: WebOptions) {
               {
                 modules: false,
                 optimize: options.environment === 'production',
-                development: options.environment === 'development'
-              }
-            ]
-          ]
-        }
-      }
+                development: options.environment === 'development',
+              },
+            ],
+          ],
+        },
+      },
     ],
     include: [
       ...toArray(options.paths.js),
       resolve(options.root, 'node_modules/@dlghq'),
       resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-components')
+      resolve(options.root, 'node_modules/@dlghq/dialog-components'),
     ],
     exclude: [
       ...valFiles,
-      resolve(options.root, 'node_modules/@dlghq/dialog-java-core')
-    ]
+      resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
+    ],
   });
 
   if (options.environment === 'production') {
     // global
     rules.push({
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false,
-              importLoaders: 1
-            }
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            modules: false,
+            importLoaders: 1,
           },
-          configurePostCSS(options)
-        ]
-      }),
+        },
+        configurePostCSS(options),
+      ],
       include: [
         ...toArray(options.paths.styles),
-        resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
-      ]
+        resolve(
+          options.root,
+          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
+        ),
+      ],
     });
 
     // css-modules
     rules.push({
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: `${options.cssPrefix}-[sha1:hash:hex]`
-            }
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            importLoaders: 1,
+            localIdentName: `${options.cssPrefix}-[sha1:hash:hex]`,
           },
-          configurePostCSS(options)
-        ]
-      }),
+        },
+        configurePostCSS(options),
+      ],
       include: [
         ...toArray(options.paths.cssModules),
         resolve(options.root, 'node_modules/@dlghq'),
         resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
-        resolve(options.root, 'node_modules/@dlghq/dialog-components')
+        resolve(options.root, 'node_modules/@dlghq/dialog-components'),
       ],
       exclude: [
         ...toArray(options.paths.styles),
-        resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
-      ]
+        resolve(
+          options.root,
+          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
+        ),
+      ],
     });
   } else {
     // global
@@ -158,15 +167,18 @@ function configureModuleRules(options: WebOptions) {
           loader: 'css-loader',
           options: {
             modules: false,
-            importLoaders: 1
-          }
+            importLoaders: 1,
+          },
         },
-        configurePostCSS(options)
+        configurePostCSS(options),
       ],
       include: [
         ...toArray(options.paths.styles),
-        resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')
-      ]
+        resolve(
+          options.root,
+          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
+        ),
+      ],
     });
 
     // app css-modules
@@ -179,13 +191,13 @@ function configureModuleRules(options: WebOptions) {
           options: {
             modules: true,
             importLoaders: 1,
-            localIdentName: `${options.cssPrefix}-[name]-[local]`
-          }
+            localIdentName: `${options.cssPrefix}-[name]-[local]`,
+          },
         },
-        configurePostCSS(options)
+        configurePostCSS(options),
       ],
       include: [...toArray(options.paths.cssModules)],
-      exclude: [...toArray(options.paths.styles)]
+      exclude: [...toArray(options.paths.styles)],
     });
 
     // dialog sdk
@@ -198,13 +210,18 @@ function configureModuleRules(options: WebOptions) {
           options: {
             modules: true,
             importLoaders: 1,
-            localIdentName: 'DialogSDK-[name]-[local]'
-          }
+            localIdentName: 'DialogSDK-[name]-[local]',
+          },
         },
-        configurePostCSS(options)
+        configurePostCSS(options),
       ],
       include: [resolve(options.root, 'node_modules/@dlghq/dialog-web-core')],
-      exclude: [resolve(options.root, 'node_modules/@dlghq/dialog-web-core/src/styles/global.css')]
+      exclude: [
+        resolve(
+          options.root,
+          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
+        ),
+      ],
     });
 
     // dialog components
@@ -217,35 +234,40 @@ function configureModuleRules(options: WebOptions) {
           options: {
             modules: true,
             importLoaders: 1,
-            localIdentName: 'DialogComponents-[name]-[local]'
-          }
+            localIdentName: 'DialogComponents-[name]-[local]',
+          },
         },
-        configurePostCSS(options)
+        configurePostCSS(options),
       ],
-      include: [resolve(options.root, 'node_modules/@dlghq/dialog-components')]
+      include: [resolve(options.root, 'node_modules/@dlghq/dialog-components')],
     });
   }
 
   rules.push({
     test: /\.yml$/,
-    loader: 'yml-loader'
+    loader: 'yml-loader',
   });
 
-  const icons = [resolve(options.root, 'node_modules/@dlghq/dialog-components/src/components/Icon/svg')];
+  const icons = [
+    resolve(
+      options.root,
+      'node_modules/@dlghq/dialog-components/src/components/Icon/svg',
+    ),
+  ];
 
   rules.push({
     test: /\.(svg|png|gif|jpe?g|ttf|eot|woff2?|mp3)$/,
     loader: 'file-loader',
     options: {
-      name: '[sha1:hash:hex].[ext]'
+      name: '[sha1:hash:hex].[ext]',
     },
-    exclude: [...icons]
+    exclude: [...icons],
   });
 
   rules.push({
     test: /\.svg$/,
     loader: 'svg-sprite-loader',
-    include: [...icons]
+    include: [...icons],
   });
 
   return rules;

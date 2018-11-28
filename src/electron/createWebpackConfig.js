@@ -18,29 +18,36 @@ function createMainConfig(options: DesktopOptions) {
     output: {
       path: options.output,
       pathinfo: true,
-      filename: 'main.js'
+      filename: 'main.js',
     },
     module: {
       rules: [
         {
           test: /\.yml$/,
-          loader: 'yml-loader'
+          loader: 'yml-loader',
         },
         {
           test: /\.(svg|png|gif|jpe?g|ico|ttf|eot|woff2?|mp3)$/,
           loader: 'file-loader',
           options: {
-            name: '[sha1:hash:hex].[ext]'
-          }
-        }
-      ]
+            name: '[sha1:hash:hex].[ext]',
+          },
+        },
+      ],
     },
     target: 'electron-main',
-    plugins: [new GenerateJsonPlugin('package.json', createPackage(options), null, '  ')],
+    plugins: [
+      new GenerateJsonPlugin(
+        'package.json',
+        createPackage(options),
+        null,
+        '  ',
+      ),
+    ],
     node: {
       __dirname: false,
-      __filename: false
-    }
+      __filename: false,
+    },
   };
 }
 
@@ -48,15 +55,12 @@ function createRendererConfig(web: WebOptions, desktop: DesktopOptions) {
   return createWebConfig({
     ...web,
     gzip: false,
-    output: path.join(desktop.output, 'app')
+    output: path.join(desktop.output, 'app'),
   });
 }
 
 function createWebpackConfig(web: WebOptions, desktop: DesktopOptions) {
-  return [
-    createMainConfig(desktop),
-    createRendererConfig(web, desktop)
-  ];
+  return [createMainConfig(desktop), createRendererConfig(web, desktop)];
 }
 
 module.exports = createWebpackConfig;
