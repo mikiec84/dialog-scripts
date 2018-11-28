@@ -27,32 +27,42 @@ class OverridePlugin {
     });
   }
 
-  apply(resolver: any) {
-    resolver.plugin('normal-module-factory', (nmf) => {
-      nmf.plugin('before-resolve', (result, callback) => {
-        if (result) {
-          let realRequest = null;
-          if (result.request[0] === '.') {
-            // relative paths
-            realRequest = path.join(result.context, result.request);
-          } else if (result.context.indexOf('node_modules') >= 0) {
-            // import from dependant module
-            realRequest = path.join(this.root, 'node_modules', result.request);
-          } else {
-            realRequest = result.request;
-          }
+  apply(compiler: any) {
+    compiler.hooks.normalModuleFactory.tap(
+      'OverridePlugin',
+      (normalModuleFactory) => {
+        normalModuleFactory.hooks.beforeResolve.tap(
+          'OverridePlugin',
+          (result) => {
+            if (!result) {
+              return false;
+            }
 
-          const fakeRequest = this.config[realRequest];
-          if (fakeRequest) {
-            result.request = fakeRequest;
-          }
+            let realRequest = null;
+            if (result.request[0] === '.') {
+              // relative paths
+              realRequest = path.join(result.context, result.request);
+            } else if (result.context.indexOf('node_modules') >= 0) {
+              // import from dependant module
+              realRequest = path.join(
+                this.root,
+                'node_modules',
+                result.request,
+              );
+            } else {
+              realRequest = result.request;
+            }
 
-          callback(null, result);
-        } else {
-          callback();
-        }
-      });
-    });
+            const fakeRequest = this.config[realRequest];
+            if (fakeRequest) {
+              result.request = fakeRequest;
+            }
+
+            return result;
+          },
+        );
+      },
+    );
   }
 }
 
