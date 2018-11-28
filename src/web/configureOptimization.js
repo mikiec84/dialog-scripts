@@ -5,7 +5,7 @@
 
 import type { WebOptions } from '../types';
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 function configureOptimization(options: WebOptions) {
@@ -13,7 +13,7 @@ function configureOptimization(options: WebOptions) {
     return {
       minimize: true,
       minimizer: [
-        new UglifyJsPlugin({
+        new TerserPlugin({
           cache: true,
           parallel: true,
           sourceMap: true,
