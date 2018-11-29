@@ -27,7 +27,7 @@ function configurePlugins(options: WebOptions) {
       minimize: options.environment === 'production',
       options: {
         context: __dirname,
-      }
+      },
     }),
   );
 
