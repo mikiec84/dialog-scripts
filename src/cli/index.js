@@ -28,11 +28,16 @@ const commands: Command[] = [
   require('./build-desktop'),
 ];
 
+const commonOptions = [['-c, --config [filename]', 'Config file name']];
+
 commands.forEach((desc) => {
   const command = program.command(desc.name);
+
   if (desc.description) {
     command.description(desc.description);
   }
+
+  commonOptions.forEach((option) => command.option(...option));
 
   if (desc.options) {
     desc.options.forEach((option) => {

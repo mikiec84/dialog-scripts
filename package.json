@@ -71,7 +71,7 @@
     "@dlghq/eslint-config-dialog": "3.4.0",
     "eslint": "5.9.0",
     "eslint-config-prettier": "3.3.0",
-    "flow-bin": "0.86.0",
+    "flow-bin": "0.87.0",
     "prettier": "1.15.2"
   }
 }

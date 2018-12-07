@@ -33,7 +33,7 @@ module.exports = {
     process.env.NODE_ENV = 'production';
     process.env.BABEL_ENV = 'production';
 
-    const config = loadDialogConfig();
+    const config = loadDialogConfig(args.config);
     if (!args.packOnly) {
       logger.info('Start bundling');
       await webpackBuild(createWebpackConfig(config.web, config.desktop));
@@ -82,7 +82,9 @@ module.exports = {
         artifactName: '${name}-${os}-${arch}-${version}.${ext}',
         appId: config.desktop.appId,
         copyright: config.desktop.copyright,
-        extraResources: config.desktop.extraResources ? config.desktop.extraResources : [],
+        extraResources: config.desktop.extraResources
+          ? config.desktop.extraResources
+          : [],
         mac: {
           category: 'public.app-category.social-networking',
           electronUpdaterCompatibility: '>=1.0.0',

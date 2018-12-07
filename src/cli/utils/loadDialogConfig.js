@@ -10,12 +10,12 @@ type DialogConfig = {
   desktop: DesktopOptions,
 };
 
-function loadDialogConfig(): DialogConfig {
+function loadDialogConfig(filename: string = 'dialog.config.js'): DialogConfig {
   const path = require('path');
 
   try {
     // $FlowFixMe: not fixable =)
-    return require(path.join(process.cwd(), 'dialog.config.js'));
+    return require(path.join(process.cwd(), filename));
   } catch (e) {
     if (e.code === 'MODULE_NOT_FOUND') {
       throw new Error(`dialog.config.js not found at ${process.cwd()}`);
