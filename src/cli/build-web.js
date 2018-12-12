@@ -10,11 +10,11 @@ const loadDialogConfig = require('./utils/loadDialogConfig');
 module.exports = {
   name: 'build-web',
   description: 'Build web application',
-  async action() {
+  async action(args: Object) {
     process.env.NODE_ENV = 'production';
     process.env.BABEL_ENV = 'production';
 
-    const config = loadDialogConfig();
+    const config = loadDialogConfig(args.config);
     const webConfig = createWebConfig(config.web);
 
     await build(webConfig);
