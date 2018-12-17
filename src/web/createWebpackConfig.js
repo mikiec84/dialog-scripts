@@ -15,13 +15,14 @@ const configureOptimization = require('./configureOptimization');
 const resolve = require('../utils/resolve');
 
 function createWebpackConfig(options: WebOptions) {
+  const { bail = true, root, entry } = options;
   options.version = getVersion(options.version);
 
   return {
-    context: resolve(options.root),
+    context: resolve(root),
     mode: process.env.NODE_ENV,
     entry: {
-      app: [options.entry.js, options.entry.css],
+      app: [entry.js, entry.css],
       vendor: ['@dlghq/dialog-java-core'],
     },
     optimization: configureOptimization(options),
@@ -46,6 +47,7 @@ function createWebpackConfig(options: WebOptions) {
       net: 'empty',
       tls: 'empty',
     },
+    bail,
   };
 }
 

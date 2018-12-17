@@ -11,16 +11,17 @@ export type SentryConfig = {
 };
 
 export type CopyWebpackPluginConfig = {
-  patterns: Array<Object|string>,
+  patterns: Array<Object | string>,
   options: {
-    debug:	string,
+    debug: string,
     ignore: Array<string>,
     context: string,
-    copyUnmodified: boolean
-  }
+    copyUnmodified: boolean,
+  },
 };
 
 export type WebOptions = {
+  bail?: boolean,
   root: string,
   entry: {
     js: string,
@@ -43,7 +44,7 @@ export type WebOptions = {
   gzip?: boolean,
   devtool?: string | boolean,
   configureSentry?: () => SentryConfig,
-  copyWebpack?: CopyWebpackPluginConfig
+  copyWebpack?: CopyWebpackPluginConfig,
 };
 
 export type PlatformType =
@@ -93,5 +94,5 @@ export type DesktopOptions = {
   schema: string,
   platforms: PlatformType[],
   configurePublish?: () => ?DesktopPublishOptions,
-  extraResources?: Array<string> | string
+  extraResources?: Array<string> | string,
 };
