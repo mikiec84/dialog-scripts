@@ -79,7 +79,7 @@ module.exports = {
           app: config.desktop.output,
           buildResources: path.join(config.desktop.root, 'assets')
         },
-        detectUpdateChannel: false,
+        detectUpdateChannel: true,
         // eslint-disable-next-line no-template-curly-in-string
         artifactName: '${name}-${os}-${arch}-${version}-${channel}.${ext}',
         appId: config.desktop.appId,
