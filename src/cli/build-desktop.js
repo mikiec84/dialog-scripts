@@ -70,16 +70,19 @@ module.exports = {
     const result = await electronBuild(config.desktop.platforms, {
       publish: publish ? 'always' : 'never',
       projectDir: config.desktop.root,
+
       config: {
         publish,
+        generateUpdatesFilesForAllChannels: true,
         forceCodeSigning: args.forceSign,
         electronVersion: detectElectronVersion(config.desktop.root),
         directories: {
           app: config.desktop.output,
           buildResources: path.join(config.desktop.root, 'assets'),
         },
+        detectUpdateChannel: false,
         // eslint-disable-next-line no-template-curly-in-string
-        artifactName: '${name}-${os}-${arch}-${version}.${ext}',
+        artifactName: '${name}-${os}-${arch}-${version}-${channel}.${ext}',
         appId: config.desktop.appId,
         copyright: config.desktop.copyright,
         extraResources: config.desktop.extraResources
