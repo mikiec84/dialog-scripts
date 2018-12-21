@@ -11,13 +11,13 @@ const S3 = require('aws-sdk/clients/s3');
 async function createLatestArtifact(
   result: string[],
   version: string,
-  options: DesktopPublishOptions,
+  { region, endpoint, channel = 'latest', bucket }: DesktopPublishOptions,
 ) {
   const s3 = new S3({
-    region: options.region,
-    endpoint: options.endpoint,
+    region,
+    endpoint,
     signatureVersion: 'v4',
-    s3ForcePathStyle: Boolean(options.endpoint),
+    s3ForcePathStyle: Boolean(endpoint),
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
@@ -30,9 +30,9 @@ async function createLatestArtifact(
       const baseName = path.basename(fileName);
 
       return copyObject({
-        Bucket: options.bucket,
-        CopySource: `${options.bucket}/${baseName}`,
-        Key: baseName.replace(version, 'latest'),
+        Bucket: bucket,
+        CopySource: `${bucket}/${baseName}`,
+        Key: baseName.replace(version, channel),
         ACL: 'public-read',
       });
     },
