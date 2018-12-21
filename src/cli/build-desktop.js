@@ -82,7 +82,7 @@ module.exports = {
         },
         detectUpdateChannel: true,
         // eslint-disable-next-line no-template-curly-in-string
-        artifactName: '${name}-${os}-${arch}-${version}-${channel}.${ext}',
+        artifactName: '${name}-${os}-${arch}-${version}.${ext}',
         appId: config.desktop.appId,
         copyright: config.desktop.copyright,
         extraResources: config.desktop.extraResources
