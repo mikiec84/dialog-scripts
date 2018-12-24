@@ -95,4 +95,7 @@ export type DesktopOptions = {
   platforms: PlatformType[],
   configurePublish?: () => ?DesktopPublishOptions,
   extraResources?: Array<string> | string,
+  mac: {
+    icon: string,
+  },
 };
