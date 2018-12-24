@@ -50,6 +50,7 @@ function configurePlugins(options: WebOptions) {
     new EnvironmentPlugin({
       VERSION: options.version,
       NODE_ENV: options.environment,
+      DEPLOY_CHANNEL: null,
     }),
   );
 
