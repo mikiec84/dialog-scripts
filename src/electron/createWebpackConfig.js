@@ -3,10 +3,11 @@
  * @flow
  */
 
-import type { DesktopOptions, WebOptions } from '../types';
-
 const path = require('path');
 const GenerateJsonPlugin = require('generate-json-webpack-plugin');
+const { EnvironmentPlugin } = require('webpack');
+
+import type { DesktopOptions, WebOptions } from '../types';
 const createPackage = require('./createPackage');
 const createWebConfig = require('../web/createWebpackConfig');
 
@@ -43,6 +44,7 @@ function createMainConfig(options: DesktopOptions) {
         null,
         '  ',
       ),
+      new EnvironmentPlugin(['DEPLOY_CHANNEL']),
     ],
     node: {
       __dirname: false,
