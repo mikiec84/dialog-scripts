@@ -1,17 +1,14 @@
-Dialog Scripts
-==============
+# Dialog Scripts
 
 Build scripts preset for dialog-based web & desktop applications.
 
-Installation
-------------
+## Installation
 
 ```
 yarn add @dlghq/dialog-scripts
 ```
 
-Usage
------
+## Usage
 
 You can configure your build using `dialog.config.js` file.
 
@@ -33,15 +30,13 @@ module.exports = {
     entry: {
       js: resolve('web/index.js'),
       css: resolve('web/styles/global.css'),
-      html: resolve('web/index.html')
+      html: resolve('web/index.html'),
     },
     paths: {
       js: resolve('web'),
       styles: resolve('web/styles'),
       cssModules: resolve('web/components'),
-      valFiles: [
-        resolve('web/messages.js')
-      ]
+      valFiles: [resolve('web/messages.js')],
     },
     favicon: resolve('assets/favicon.png'),
     version: pkg.version,
@@ -49,18 +44,19 @@ module.exports = {
     environment: process.env.NODE_ENV || 'development',
     override: {
       // override any file from dialog sdk and it's dependencies
-      '~/@dlghq/dialog-components/src/components/Logo/Logo': 'web/components/Logo/Logo',
+      '~/@dlghq/dialog-components/src/components/Logo/Logo':
+        'web/components/Logo/Logo',
     },
     configureSentry() {
       if (process.env.SENTRY_API_KEY) {
         return {
           apiKey: process.env.SENTRY_API_KEY,
-          project: 'my-app'
+          project: 'my-app',
         };
       }
 
       return null;
-    }
+    },
   },
   // desktop-app build configuration
   desktop: {
@@ -74,16 +70,16 @@ module.exports = {
     description: 'My App Messenger',
     author: {
       name: 'My Company',
-      email: 'support@my-app.com'
+      email: 'support@my-app.com',
     },
     appId: 'com.my-app',
     copyright: 'Copyright © 2017 My Company',
     schema: 'mycompany',
-    platforms: ['macos', 'windows', 'deb', 'rpm']
-  }
+    platforms: ['macos', 'windows', 'deb', 'rpm'],
+  },
 };
 ```
 
-License
--------
+## License
+
 [Apache-2.0](LICENSE)

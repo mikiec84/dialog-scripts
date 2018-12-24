@@ -33,7 +33,7 @@ function getVersion(version: string): string {
   const versions = [
     version + '.' + (getBuildNumber() || 'dev'),
     getSDKVersion(),
-    getCoreVersion()
+    getCoreVersion(),
   ];
 
   return versions.filter((item) => Boolean(item)).join('-');

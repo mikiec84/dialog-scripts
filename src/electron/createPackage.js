@@ -13,7 +13,7 @@ function createPackage(options: DesktopOptions) {
     homepage: options.homepage,
     productName: options.productName,
     description: options.description,
-    main: 'main.js'
+    main: 'main.js',
   };
 }
 

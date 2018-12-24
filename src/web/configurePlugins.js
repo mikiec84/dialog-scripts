@@ -9,10 +9,7 @@ const {
   DefinePlugin,
   EnvironmentPlugin,
   LoaderOptionsPlugin,
-  optimize: {
-    UglifyJsPlugin,
-    CommonsChunkPlugin
-  }
+  optimize: { UglifyJsPlugin, CommonsChunkPlugin },
 } = require('webpack');
 const HTMLPlugin = require('html-webpack-plugin');
 const SentryPlugin = require('webpack-sentry-plugin');
@@ -26,84 +23,109 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 function configurePlugins(options: WebOptions) {
   const plugins = [];
 
-  plugins.push(new LoaderOptionsPlugin({
-    debug: options.environment === 'development',
-    minimize: options.environment === 'production'
-  }));
+  plugins.push(
+    new LoaderOptionsPlugin({
+      debug: options.environment === 'development',
+      minimize: options.environment === 'production',
+    }),
+  );
 
-  plugins.push(new HTMLPlugin({
-    favicon: options.favicon,
-    template: options.entry.html
-  }));
+  plugins.push(
+    new HTMLPlugin({
+      favicon: options.favicon,
+      template: options.entry.html,
+    }),
+  );
 
-  plugins.push(new DefinePlugin({
-    __DEV__: JSON.stringify(options.environment === 'development'),
-    __BROWSER__: JSON.stringify(true),
-    __VERSION__: JSON.stringify(options.version)
-  }));
+  plugins.push(
+    new DefinePlugin({
+      __DEV__: JSON.stringify(options.environment === 'development'),
+      __BROWSER__: JSON.stringify(true),
+      __VERSION__: JSON.stringify(options.version),
+    }),
+  );
 
-  plugins.push(new EnvironmentPlugin({
-    VERSION: options.version,
-    NODE_ENV: options.environment
-  }));
+  plugins.push(
+    new EnvironmentPlugin({
+      VERSION: options.version,
+      NODE_ENV: options.environment,
+    }),
+  );
 
   plugins.push(new OverridePlugin(options.root, options.override));
 
   if (options.copyWebpack) {
-    plugins.push(new CopyWebpackPlugin(options.copyWebpack.patterns, options.copyWebpack.options));
+    plugins.push(
+      new CopyWebpackPlugin(
+        options.copyWebpack.patterns,
+        options.copyWebpack.options,
+      ),
+    );
   }
 
-  plugins.push(new CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: Infinity
-  }));
+  plugins.push(
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+    }),
+  );
 
   plugins.push(new DuplicatePackageCheckerPlugin());
 
   if (options.environment === 'production') {
-    plugins.push(new UglifyJsPlugin({
-      sourceMap: true,
-      beautify: false,
-      comments: false,
-      compress: {
-        screw_ie8: true,
-        warnings: false
-      },
-      mangle: {
-        screw_ie8: true
-      },
-      output: {
+    plugins.push(
+      new UglifyJsPlugin({
+        sourceMap: true,
+        beautify: false,
         comments: false,
-        screw_ie8: true
-      },
-      exclude: [resolve(options.root, 'node_modules/@dlghq/dialog-java-core/core.js')]
-    }));
+        compress: {
+          screw_ie8: true,
+          warnings: false,
+        },
+        mangle: {
+          screw_ie8: true,
+        },
+        output: {
+          comments: false,
+          screw_ie8: true,
+        },
+        exclude: [
+          resolve(options.root, 'node_modules/@dlghq/dialog-java-core/core.js'),
+        ],
+      }),
+    );
 
-    plugins.push(new ExtractTextPlugin({
-      filename: '[name].[contenthash].css'
-    }));
+    plugins.push(
+      new ExtractTextPlugin({
+        filename: '[name].[contenthash].css',
+      }),
+    );
 
     if (options.gzip !== false) {
-      plugins.push(new CompressionPlugin({
-        test: /\.(js|css|html)$/,
-        minRatio: 0.8,
-        threshold: 10240
-      }));
+      plugins.push(
+        new CompressionPlugin({
+          test: /\.(js|css|html)$/,
+          minRatio: 0.8,
+          threshold: 10240,
+        }),
+      );
     }
 
     if (options.configureSentry) {
       const sentry = options.configureSentry();
 
       if (sentry) {
-        plugins.push(new SentryPlugin({
-          apiKey: sentry.apiKey,
-          project: sentry.project,
-          organisation: sentry.organisation,
-          baseSentryURL: sentry.url,
-          release() {
-            return options.version;
-          }
-        }));
+        plugins.push(
+          new SentryPlugin({
+            apiKey: sentry.apiKey,
+            project: sentry.project,
+            organisation: sentry.organisation,
+            baseSentryURL: sentry.url,
+            release() {
+              return options.version;
+            },
+          }),
+        );
       }
     }
   }

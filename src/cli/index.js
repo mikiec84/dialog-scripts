@@ -10,7 +10,7 @@ const Promise = require('bluebird');
 Promise.config({
   warnings: true,
   monitoring: true,
-  longStackTraces: true
+  longStackTraces: true,
 });
 
 program.version('1.0.1');
@@ -19,13 +19,13 @@ type Command = {
   name: string,
   description?: string,
   options?: Array<[string, string]>,
-  action: (args: Object) => Promise<void>
+  action: (args: Object) => Promise<void>,
 };
 
 const commands: Command[] = [
   require('./build-web'),
   require('./start-web'),
-  require('./build-desktop')
+  require('./build-desktop'),
 ];
 
 commands.forEach((desc) => {
@@ -41,12 +41,15 @@ commands.forEach((desc) => {
   }
 
   command.action((...args) => {
-    desc.action(...args).then(() => {
-      process.exit(0); // eslint-disable-line no-process-exit
-    }).catch((error) => {
-      console.error(error);
-      process.exit(1); // eslint-disable-line no-process-exit
-    });
+    desc
+      .action(...args)
+      .then(() => {
+        process.exit(0); // eslint-disable-line no-process-exit
+      })
+      .catch((error) => {
+        console.error(error);
+        process.exit(1); // eslint-disable-line no-process-exit
+      });
   });
 });
 

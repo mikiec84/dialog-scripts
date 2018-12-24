@@ -6,7 +6,7 @@
 const path = require('path');
 
 type OverrideConfig = {
-  [from: string]: string
+  [from: string]: string,
 };
 
 class OverridePlugin {

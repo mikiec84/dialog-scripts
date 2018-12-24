@@ -21,7 +21,8 @@
     "release": "git push --follow-tags",
     "postversion": "npm run release",
     "prerelease": "npm run build",
-    "postrelease": "npm publish"
+    "postrelease": "npm publish",
+    "fmt": "prettier --write \"**/*.{js,md,css}\""
   },
   "dependencies": {
     "@dlghq/babel-preset-dialog": "3.5.2",
@@ -66,6 +67,8 @@
     "babel-plugin-transform-flow-comments": "6.22.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "eslint": "5.6.0",
-    "flow-bin": "0.81.0"
+    "eslint-config-prettier": "3.3.0",
+    "flow-bin": "0.81.0",
+    "prettier": "1.15.3"
   }
 }

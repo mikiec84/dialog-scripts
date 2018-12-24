@@ -7,7 +7,7 @@ export type SentryConfig = {
   url?: string,
   apiKey: string,
   project: string,
-  organisation: string
+  organisation: string,
 };
 
 export type WebOptions = {
@@ -15,13 +15,13 @@ export type WebOptions = {
   entry: {
     js: string,
     css: string,
-    html: string
+    html: string,
   },
   paths: {
     js: string,
     styles: string,
     cssModules: string,
-    valFiles?: string[]
+    valFiles?: string[],
   },
   alias?: string[],
   favicon: string,
@@ -32,7 +32,7 @@ export type WebOptions = {
   environment: string,
   gzip?: boolean,
   devtool?: string | boolean,
-  configureSentry?: () => SentryConfig
+  configureSentry?: () => SentryConfig,
 };
 
 export type PlatformType =
@@ -59,7 +59,7 @@ type S3PublishOptions = {
   acl?: 'private' | 'public-read',
   endpoint?: string,
   channel?: string,
-  path?: string
+  path?: string,
 };
 
 export type DesktopPublishOptions = S3PublishOptions;
@@ -75,11 +75,11 @@ export type DesktopOptions = {
   description: string,
   author: {
     name: string,
-    email: string
+    email: string,
   },
   appId: string,
   copyright: string,
   schema: string,
   platforms: PlatformType[],
-  configurePublish?: () => ?DesktopPublishOptions
+  configurePublish?: () => ?DesktopPublishOptions,
 };

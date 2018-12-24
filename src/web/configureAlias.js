@@ -15,7 +15,7 @@ function configureAlias(options: WebOptions) {
     'raven-js',
     'screenfull',
     'hoist-non-react-statics',
-    'lodash'
+    'lodash',
   ];
 
   if (options.alias) {
