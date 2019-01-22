@@ -63,6 +63,7 @@ function configureModuleRules(options: WebOptions) {
     exclude: [
       ...valFiles,
       resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
+      resolve(options.root, 'node_modules/@babel'),
     ],
   });
 
@@ -97,6 +98,7 @@ function configureModuleRules(options: WebOptions) {
     exclude: [
       ...valFiles,
       resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
+      resolve(options.root, 'node_modules/@babel'),
     ],
   });
 
