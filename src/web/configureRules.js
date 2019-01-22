@@ -47,7 +47,7 @@ function configureModuleRules(options: WebOptions) {
         [
           '@dlghq/dialog',
           {
-            modules: false,
+            modules: true,
             optimize: options.environment === 'production',
             development: options.environment === 'development',
           },
@@ -80,7 +80,7 @@ function configureModuleRules(options: WebOptions) {
             [
               '@dlghq/dialog',
               {
-                modules: false,
+                modules: true,
                 optimize: options.environment === 'production',
                 development: options.environment === 'development',
               },
