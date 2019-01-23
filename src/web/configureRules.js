@@ -64,6 +64,8 @@ function configureModuleRules(options: WebOptions) {
       ...valFiles,
       resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
       resolve(options.root, 'node_modules/@babel'),
+      // this is hack to exclude elasticlunr from tranpile because of shitty global variable `lunr`
+      resolve(options.root, 'node_modules/elasticlunr'),
     ],
   });
 
