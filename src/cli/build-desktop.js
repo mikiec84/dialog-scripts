@@ -89,7 +89,7 @@ module.exports = {
           ? config.desktop.extraResources
           : [],
         mac: {
-          icon: config.desktop.mac.icon,
+          icon: config.desktop.mac ? config.desktop.mac.icon : undefined,
           category: 'public.app-category.social-networking',
           electronUpdaterCompatibility: '>=1.0.0',
         },
