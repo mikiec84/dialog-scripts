@@ -4,6 +4,7 @@
  */
 
 const path = require('path');
+
 const webpackBuild = require('../webpack/build');
 const electronBuild = require('../electron/build');
 const logger = require('../utils/logger');
