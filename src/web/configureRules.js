@@ -59,6 +59,7 @@ function configureModuleRules(options: WebOptions) {
       resolve(options.root, 'node_modules/@dlghq'),
       resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
       resolve(options.root, 'node_modules/@dlghq/dialog-components'),
+      resolve(options.root, 'node_modules/@dlghq/dialog-ui'),
     ],
     exclude: [
       ...valFiles,
@@ -96,6 +97,7 @@ function configureModuleRules(options: WebOptions) {
       resolve(options.root, 'node_modules/@dlghq'),
       resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
       resolve(options.root, 'node_modules/@dlghq/dialog-components'),
+      resolve(options.root, 'node_modules/@dlghq/dialog-ui'),
     ],
     exclude: [
       ...valFiles,
@@ -152,6 +154,7 @@ function configureModuleRules(options: WebOptions) {
         resolve(options.root, 'node_modules/@dlghq'),
         resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
         resolve(options.root, 'node_modules/@dlghq/dialog-components'),
+        resolve(options.root, 'node_modules/@dlghq/dialog-ui'),
       ],
       exclude: [
         ...toArray(options.paths.styles),
@@ -245,6 +248,24 @@ function configureModuleRules(options: WebOptions) {
       ],
       include: [resolve(options.root, 'node_modules/@dlghq/dialog-components')],
     });
+
+    // dialog ui
+    rules.push({
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            importLoaders: 1,
+            localIdentName: 'DialogUI-[name]-[local]',
+          },
+        },
+        configurePostCSS(options),
+      ],
+      include: [resolve(options.root, 'node_modules/@dlghq/dialog-ui')],
+    });
   }
 
   rules.push({
@@ -256,6 +277,10 @@ function configureModuleRules(options: WebOptions) {
     resolve(
       options.root,
       'node_modules/@dlghq/dialog-components/src/components/Icon/svg',
+    ),
+    resolve(
+      options.root,
+      'node_modules/@dlghq/dialog-ui/src/components/Icon/svg',
     ),
   ];
 
