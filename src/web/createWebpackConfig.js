@@ -23,7 +23,6 @@ function createWebpackConfig(options: WebOptions) {
     mode: process.env.NODE_ENV,
     entry: {
       app: [entry.js, entry.css],
-      vendor: ['@dlghq/dialog-java-core'],
     },
     optimization: configureOptimization(options),
     output: configureOutput(options),
