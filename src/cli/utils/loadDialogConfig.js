@@ -4,6 +4,8 @@
  */
 
 import type { WebOptions, DesktopOptions } from '../../types';
+import path from 'path';
+import fs from 'fs';
 
 type DialogConfig = {
   web: WebOptions,
@@ -11,18 +13,13 @@ type DialogConfig = {
 };
 
 function loadDialogConfig(filename: string = 'dialog.config.js'): DialogConfig {
-  const path = require('path');
-
-  try {
-    // $FlowFixMe: not fixable =)
-    return require(path.join(process.cwd(), filename));
-  } catch (e) {
-    if (e.code === 'MODULE_NOT_FOUND') {
-      throw new Error(`dialog.config.js not found at ${process.cwd()}`);
-    }
-
-    throw e;
+  const filePath: string = path.join(process.cwd(), filename);
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Cannot find config file '${filePath}'`);
   }
+
+  // $FlowFixMe: not fixable =)
+  return require(filePath);
 }
 
 module.exports = loadDialogConfig;
