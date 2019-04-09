@@ -24,6 +24,10 @@ function createMainConfig(options: DesktopOptions) {
     module: {
       rules: [
         {
+          test: /\.node$/,
+          use: 'native-ext-loader'
+        },
+        {
           test: /\.yml$/,
           loader: 'yml-loader',
         },

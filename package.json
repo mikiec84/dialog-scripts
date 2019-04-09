@@ -9,7 +9,14 @@
   "bin": {
     "dialog-scripts": "./bin/dialog-scripts.js"
   },
-  "repository": "ssh://git@bitbucket.transmit.im:7999/dlgweb/dialog-scripts.git",
+  "homepage": "https://github.com/dialogs/dialog-scripts",
+  "bugs": {
+    "url": "https://github.com/dialogs/dialog-scripts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dialogs/dialog-scripts.git"
+  },
   "author": "Nikita Gusakov <gusnkt@gmail.com>",
   "license": "UNLICENSED",
   "scripts": {
@@ -46,6 +53,7 @@
     "json-loader": "0.5.7",
     "lodash": "4.17.11",
     "mini-css-extract-plugin": "0.4.5",
+    "native-ext-loader": "2.3.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "postcss-loader": "3.0.0",
     "progress-bar-webpack-plugin": "1.11.0",
