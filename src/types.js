@@ -10,6 +10,13 @@ export type SentryConfig = {
   organisation: string,
 };
 
+export type WebpackRule = {
+  test: string,
+  use: string,
+  include?: string,
+  exclude?: string
+};
+
 export type CopyWebpackPluginConfig = {
   patterns: Array<Object | string>,
   options: {
@@ -34,6 +41,7 @@ export type WebOptions = {
     cssModules: string,
     valFiles?: string[],
   },
+  rules?: Array<WebpackRule>,
   alias?: string[],
   favicon: string,
   output: string,

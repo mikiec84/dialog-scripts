@@ -299,6 +299,10 @@ function configureModuleRules(options: WebOptions) {
     include: [...icons],
   });
 
+  if (Array.isArray(options.rules)) {
+    rules.push(...options.rules);
+  }
+
   return rules;
 }
 
