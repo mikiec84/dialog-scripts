@@ -19,6 +19,7 @@
     "prebuild": "rm -rf lib/",
     "build": "babel -d lib/ src/",
     "release": "git push --follow-tags",
+    "postrelease": "npm publish",
     "preversion": "npm test",
     "postversion": "npm run release",
     "prerelease": "npm run build",
