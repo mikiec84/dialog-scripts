@@ -142,9 +142,10 @@ function configureModuleRules(options: WebOptions) {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
+            modules: {
+              localIdentName: `${options.cssPrefix}__[sha1:hash:hex]`,
+            },
             importLoaders: 1,
-            localIdentName: `${options.cssPrefix}-[sha1:hash:hex]`,
           },
         },
         configurePostCSS(options),
@@ -196,9 +197,10 @@ function configureModuleRules(options: WebOptions) {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
+            modules: {
+              localIdentName: `${options.cssPrefix}__[name]__[local]`,
+            },
             importLoaders: 1,
-            localIdentName: `${options.cssPrefix}-[name]-[local]`,
           },
         },
         configurePostCSS(options),
@@ -215,9 +217,10 @@ function configureModuleRules(options: WebOptions) {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
+            modules: {
+              localIdentName: 'DialogSDK__[name]__[local]',
+            },
             importLoaders: 1,
-            localIdentName: 'DialogSDK-[name]-[local]',
           },
         },
         configurePostCSS(options),
@@ -239,9 +242,10 @@ function configureModuleRules(options: WebOptions) {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
+            modules: {
+              localIdentName: 'DialogComponents__[name]__[local]',
+            },
             importLoaders: 1,
-            localIdentName: 'DialogComponents-[name]-[local]',
           },
         },
         configurePostCSS(options),
@@ -257,9 +261,10 @@ function configureModuleRules(options: WebOptions) {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
+            modules: {
+              localIdentName: 'DialogUI__[name]__[local]',
+            },
             importLoaders: 1,
-            localIdentName: 'DialogUI-[name]-[local]',
           },
         },
         configurePostCSS(options),
