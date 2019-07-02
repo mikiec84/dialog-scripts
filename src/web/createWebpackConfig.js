@@ -3,51 +3,57 @@
  * @flow
  */
 
+import path from 'path';
 import type { WebOptions } from '../types';
+import { resolveRealPath } from '../utils/resolve';
+import { configureWebpackOutput } from './configureOutput';
+import { configureWebpackOptimization } from './configureOptimization';
+import { configureRules } from './configureRules';
+import { configurePlugins } from './configurePlugins';
+import { configureDevTool } from './configureDevTool';
 
-const getVersion = require('./getVersion');
-const configureOutput = require('./configureOutput');
-const configureRules = require('./configureRules');
-const configurePlugins = require('./configurePlugins');
-const configureAlias = require('./configureAlias');
-const configureDevTool = require('./configureDevTool');
-const configureOptimization = require('./configureOptimization');
-const resolve = require('../utils/resolve');
-
-function createWebpackConfig(options: WebOptions) {
+export function createWebpackConfigForWeb(options: WebOptions) {
   const { bail = true, root, entry } = options;
-  options.version = getVersion(options.version);
 
-  return {
-    context: resolve(root),
+  const config = {
+    target: 'web',
+    context: resolveRealPath(root),
     mode: process.env.NODE_ENV,
     entry: {
-      app: [entry.js, entry.css],
+      app: [entry.js, entry.css].filter(Boolean),
     },
-    optimization: configureOptimization(options),
-    output: configureOutput(options),
     resolveLoader: {
       moduleExtensions: ['-loader'],
     },
-    module: {
-      rules: configureRules(options),
-    },
-    resolve: {
-      alias: configureAlias(options),
-    },
-    plugins: configurePlugins(options),
-    devServer: {
-      port: 3000,
-    },
-    devtool: configureDevTool(options),
-    target: 'web',
     node: {
       fs: 'empty',
       net: 'empty',
       tls: 'empty',
     },
     bail,
-  };
-}
 
-module.exports = createWebpackConfig;
+    output: configureWebpackOutput(options),
+    optimization: configureWebpackOptimization(options),
+    module: {
+      rules: configureRules(options),
+    },
+    plugins: configurePlugins(options),
+    devtool: configureDevTool(options),
+    resolve: {
+      alias: {
+        ...options.alias,
+      },
+      modules: [path.join(options.root, 'node_modules'), 'node_modules'],
+    },
+
+    devServer: {
+      port: 3000,
+      hot: true,
+      historyApiFallback: {
+        index: 'index.html',
+      },
+    },
+  };
+
+  return config;
+}

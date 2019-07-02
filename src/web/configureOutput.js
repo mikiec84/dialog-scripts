@@ -5,7 +5,7 @@
 
 import type { WebOptions } from '../types';
 
-function configureOutput(options: WebOptions) {
+export function configureWebpackOutput(options: WebOptions) {
   if (options.environment === 'production') {
     return {
       path: options.output,
@@ -23,5 +23,3 @@ function configureOutput(options: WebOptions) {
     filename: '[name].js',
   };
 }
-
-module.exports = configureOutput;

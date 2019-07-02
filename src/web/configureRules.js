@@ -3,303 +3,144 @@
  * @flow
  */
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-const resolve = require('../utils/resolve');
-const configurePostCSS = require('./configurePostCSS');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type { WebOptions } from '../types';
 
-function toArray<T>(value: ?(T | Array<T>)): Array<T> {
-  if (value) {
-    if (Array.isArray(value)) {
-      return value;
-    }
+export function configureRules(options: WebOptions) {
+  const prodMode = options.environment === 'production';
+  const devMode = !prodMode;
 
-    return [value];
-  }
+  const babelLoaderOptions = {
+    babelrc: false,
+    cacheDirectory: true,
+    presets: [
+      [
+        '@dlghq/babel-preset-dialog',
+        {
+          development: devMode,
+          optimize: prodMode,
+        },
+      ],
+    ],
+    plugins: ['astroturf/plugin'],
+  };
 
-  return [];
-}
-
-function configureModuleRules(options: WebOptions) {
   const rules = [];
 
-  const valFiles = [
-    ...toArray(options.paths.valFiles),
-    resolve(
-      options.root,
-      'node_modules/@dlghq/dialog-web-core/src/messages-generate.js',
-    ),
-  ];
-
   rules.push({
-    test: valFiles,
+    test: [
+      /@dlghq\/rxjs-sdk-app\/src\/utils\/generateMessages\.js/,
+      ...(options.paths.valFiles || []),
+    ],
     loader: 'val-loader',
   });
 
   rules.push({
     test: /\.js$/,
-    loader: 'babel-loader',
-    options: {
-      babelrc: false,
-      cacheDirectory: true,
-      presets: [
-        [
-          '@dlghq/dialog',
-          {
-            modules: true,
-            optimize: options.environment === 'production',
-            development: options.environment === 'development',
-          },
-        ],
-      ],
-    },
-    include: [
-      ...toArray(options.paths.js),
-      resolve(options.root, 'node_modules/@dlghq'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-components'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-ui'),
-    ],
-    exclude: [
-      ...valFiles,
-      resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
-      resolve(options.root, 'node_modules/@babel'),
-      // this is hack to exclude elasticlunr from tranpile because of shitty global variable `lunr`
-      resolve(options.root, 'node_modules/elasticlunr'),
+    include: [/@dlghq\/.+/, ...(options.paths.js ? [options.paths.js] : [])],
+    sideEffects: false,
+    use: [
+      {
+        loader: 'babel-loader',
+        options: babelLoaderOptions,
+      },
+      'astroturf/loader',
     ],
   });
 
   rules.push({
     test: /\.worker\.js$/,
+    include: [/@dlghq\/.+/, ...(options.paths.js ? [options.paths.js] : [])],
     use: [
       'worker-loader',
       {
         loader: 'babel-loader',
+        options: babelLoaderOptions,
+      },
+    ],
+  });
+
+  rules.push({
+    test: /\.css$/,
+    use: [
+      {
+        loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+      },
+      {
+        loader: 'css-loader',
         options: {
-          babelrc: false,
-          cacheDirectory: true,
-          presets: [
-            [
-              '@dlghq/dialog',
-              {
-                modules: true,
-                optimize: options.environment === 'production',
-                development: options.environment === 'development',
+          importLoaders: 1,
+          modules: {
+            localIdentName: prodMode
+              ? `${options.cssPrefix}-[sha1:hash:hex]`
+              : `${options.cssPrefix}-[name]__[local]`,
+          },
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: [
+            require('postcss-import')({
+              skipDuplicates: true,
+              resolve(id: string, base: string): string {
+                if (
+                  base.startsWith(options.paths.styles) ||
+                  base.startsWith(options.paths.cssModules)
+                ) {
+                  return id;
+                }
+
+                if (id.startsWith('@')) {
+                  return require.resolve(id);
+                }
+
+                return id;
               },
-            ],
+            }),
+            require('postcss-preset-env')({
+              stage: 3,
+              features: {
+                'nesting-rules': true,
+                'custom-properties': false,
+                'color-mod-function': { unresolved: 'warn' },
+              },
+            }),
+            require('cssnano')({
+              preset: 'default',
+            }),
           ],
         },
       },
     ],
-    include: [
-      ...toArray(options.paths.js),
-      resolve(options.root, 'node_modules/@dlghq'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-components'),
-      resolve(options.root, 'node_modules/@dlghq/dialog-ui'),
-    ],
-    exclude: [
-      ...valFiles,
-      resolve(options.root, 'node_modules/@dlghq/dialog-java-core'),
-      resolve(options.root, 'node_modules/@babel'),
-    ],
   });
-
-  if (options.environment === 'production') {
-    // global
-    rules.push({
-      test: /\.css$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
-        },
-        {
-          loader: 'css-loader',
-          options: {
-            modules: false,
-            importLoaders: 1,
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [
-        ...toArray(options.paths.styles),
-        resolve(
-          options.root,
-          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
-        ),
-      ],
-    });
-
-    // css-modules
-    rules.push({
-      test: /\.css$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
-        },
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: `${options.cssPrefix}-[sha1:hash:hex]`,
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [
-        ...toArray(options.paths.cssModules),
-        resolve(options.root, 'node_modules/@dlghq'),
-        resolve(options.root, 'node_modules/@dlghq/dialog-web-core'),
-        resolve(options.root, 'node_modules/@dlghq/dialog-components'),
-        resolve(options.root, 'node_modules/@dlghq/dialog-ui'),
-      ],
-      exclude: [
-        ...toArray(options.paths.styles),
-        resolve(
-          options.root,
-          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
-        ),
-      ],
-    });
-  } else {
-    // global
-    rules.push({
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            modules: false,
-            importLoaders: 1,
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [
-        ...toArray(options.paths.styles),
-        resolve(
-          options.root,
-          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
-        ),
-      ],
-    });
-
-    // app css-modules
-    rules.push({
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: `${options.cssPrefix}-[name]-[local]`,
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [...toArray(options.paths.cssModules)],
-      exclude: [...toArray(options.paths.styles)],
-    });
-
-    // dialog sdk
-    rules.push({
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: 'DialogSDK-[name]-[local]',
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [resolve(options.root, 'node_modules/@dlghq/dialog-web-core')],
-      exclude: [
-        resolve(
-          options.root,
-          'node_modules/@dlghq/dialog-web-core/src/styles/global.css',
-        ),
-      ],
-    });
-
-    // dialog components
-    rules.push({
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: 'DialogComponents-[name]-[local]',
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [resolve(options.root, 'node_modules/@dlghq/dialog-components')],
-    });
-
-    // dialog ui
-    rules.push({
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: 'DialogUI-[name]-[local]',
-          },
-        },
-        configurePostCSS(options),
-      ],
-      include: [resolve(options.root, 'node_modules/@dlghq/dialog-ui')],
-    });
-  }
 
   rules.push({
     test: /\.yml$/,
     loader: 'yml-loader',
   });
 
-  const icons = [
-    resolve(
-      options.root,
-      'node_modules/@dlghq/dialog-components/src/components/Icon/svg',
-    ),
-    resolve(
-      options.root,
-      'node_modules/@dlghq/dialog-ui/src/components/Icon/svg',
-    ),
-  ];
-
+  const iconPaths = [/@dlghq\/dialog-ui\/src\/components\/Icon\/svg/];
   rules.push({
-    test: /\.(svg|png|gif|jpe?g|ttf|eot|woff2?|mp3)$/,
+    test: /\.(png|svg|gif|jpe?g|mp3|ttf|eot|woff|woff2|webm|mp4)$/,
+    exclude: [...iconPaths],
     loader: 'file-loader',
     options: {
-      name: '[sha1:hash:hex].[ext]',
+      name: devMode ? '[name].[sha1:hash:hex].[ext]' : '[sha1:hash:hex].[ext]',
     },
-    exclude: [...icons],
   });
-
   rules.push({
     test: /\.svg$/,
+    include: [...iconPaths],
     loader: 'svg-sprite-loader',
-    include: [...icons],
+    options: {
+      runtimeCompat: true,
+      plainSprite: true,
+      spriteAttrs: {
+        id: 'dialog-icon-sprite',
+      },
+    },
   });
 
   return rules;
 }
-
-module.exports = configureModuleRules;

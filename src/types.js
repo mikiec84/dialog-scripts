@@ -34,7 +34,7 @@ export type WebOptions = {
     cssModules: string,
     valFiles?: string[],
   },
-  alias?: string[],
+  alias?: { [packageName: string]: string },
   favicon: string,
   output: string,
   version: string,

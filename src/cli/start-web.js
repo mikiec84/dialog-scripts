@@ -5,7 +5,7 @@
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const createWebConfig = require('../web/createWebpackConfig');
+const { createWebpackConfigForWeb } = require('../web/createWebpackConfig');
 const loadDialogConfig = require('./utils/loadDialogConfig');
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     const host = args.host || '127.0.0.1';
 
     const config = loadDialogConfig();
-    const webConfig = createWebConfig(config.web);
+    const webConfig = createWebpackConfigForWeb(config.web);
 
     const compiler = webpack(webConfig);
     const server = new WebpackDevServer(compiler, {

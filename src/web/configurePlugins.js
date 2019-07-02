@@ -4,6 +4,9 @@
  */
 
 import type { WebOptions } from '../types';
+import getBuildNumber from 'build-number';
+import { getPackageVersion } from '../utils/resolve';
+import { getEnvSubset } from '../utils/env';
 
 const {
   DefinePlugin,
@@ -18,13 +21,19 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OverridePlugin = require('../webpack/OverridePlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-function configurePlugins(options: WebOptions) {
+export function configurePlugins(options: WebOptions) {
+  const prodMode = options.environment === 'production';
+  const devMode = !prodMode;
+
+  const buildNumber = getBuildNumber();
+  const platformVersion = getPackageVersion('@dlghq/rxjs-sdk');
+
   const plugins = [];
 
   plugins.push(
     new LoaderOptionsPlugin({
-      debug: options.environment === 'development',
-      minimize: options.environment === 'production',
+      debug: devMode,
+      minimize: prodMode,
       options: {
         context: __dirname,
       },
@@ -40,17 +49,22 @@ function configurePlugins(options: WebOptions) {
 
   plugins.push(
     new DefinePlugin({
-      __DEV__: JSON.stringify(options.environment === 'development'),
+      __DEV__: JSON.stringify(devMode),
       __BROWSER__: JSON.stringify(true),
       __VERSION__: JSON.stringify(options.version),
     }),
   );
 
+  const dialogVars = getEnvSubset('DIALOG_');
   plugins.push(
     new EnvironmentPlugin({
       VERSION: options.version,
       NODE_ENV: options.environment,
-      DEPLOY_CHANNEL: null,
+      DEPLOY_CHANNEL: undefined,
+      BUILD_NUMBER: buildNumber || undefined,
+      PLATFORM_VERSION: platformVersion || undefined,
+      ENDPOINT: undefined,
+      ...dialogVars,
     }),
   );
 
@@ -67,43 +81,42 @@ function configurePlugins(options: WebOptions) {
 
   plugins.push(new DuplicatePackageCheckerPlugin());
 
-  if (options.environment === 'production') {
+  if (prodMode) {
     plugins.push(
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css',
+        chunkFilename: '[id].[contenthash].css',
       }),
     );
+  }
 
-    if (options.gzip !== false) {
+  if (prodMode && options.gzip !== false) {
+    plugins.push(
+      new CompressionPlugin({
+        test: /\.(js|css|html)$/,
+        minRatio: 0.8,
+        threshold: 10240,
+      }),
+    );
+  }
+
+  if (prodMode && options.configureSentry) {
+    const sentry = options.configureSentry();
+
+    if (sentry) {
       plugins.push(
-        new CompressionPlugin({
-          test: /\.(js|css|html)$/,
-          minRatio: 0.8,
-          threshold: 10240,
+        new SentryPlugin({
+          apiKey: sentry.apiKey,
+          project: sentry.project,
+          organisation: sentry.organisation,
+          baseSentryURL: sentry.url,
+          release() {
+            return options.version;
+          },
         }),
       );
-    }
-
-    if (options.configureSentry) {
-      const sentry = options.configureSentry();
-
-      if (sentry) {
-        plugins.push(
-          new SentryPlugin({
-            apiKey: sentry.apiKey,
-            project: sentry.project,
-            organisation: sentry.organisation,
-            baseSentryURL: sentry.url,
-            release() {
-              return options.version;
-            },
-          }),
-        );
-      }
     }
   }
 
   return plugins;
 }
-
-module.exports = configurePlugins;

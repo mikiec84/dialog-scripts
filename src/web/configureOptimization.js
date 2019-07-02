@@ -4,12 +4,11 @@
  */
 
 import type { WebOptions } from '../types';
+import TerserPlugin from 'terser-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-function configureOptimization(options: WebOptions) {
-  const chunkConfig = {
+function getChunkConfig() {
+  return {
     splitChunks: {
       cacheGroups: {
         vendor: {
@@ -26,32 +25,39 @@ function configureOptimization(options: WebOptions) {
               packageName = nameData[1].replace('@', '');
             }
 
-            return packageName === 'dlghq' ? 'core' : 'vendor';
+            return packageName === 'dlghq' ? 'dlghq' : 'vendor';
           },
         },
       },
     },
   };
+}
 
-  if (options.environment === 'production') {
-    return {
-      ...chunkConfig,
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true,
-        }),
-        new OptimizeCSSAssetsPlugin(),
-      ],
-    };
-  }
-
+function getMinimizerProdConfig() {
   return {
-    ...chunkConfig,
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin(),
+    ],
+  };
+}
+
+function getMinimizerDevConfig() {
+  return {
     minimize: false,
   };
 }
 
-module.exports = configureOptimization;
+export function configureWebpackOptimization(options: WebOptions) {
+  const prodMode = options.environment === 'production';
+
+  return {
+    ...getChunkConfig(),
+    ...(prodMode ? getMinimizerProdConfig() : getMinimizerDevConfig()),
+  };
+}

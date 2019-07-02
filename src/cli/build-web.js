@@ -4,7 +4,7 @@
  */
 
 const build = require('../webpack/build');
-const createWebConfig = require('../web/createWebpackConfig');
+const { createWebpackConfigForWeb } = require('../web/createWebpackConfig');
 const loadDialogConfig = require('./utils/loadDialogConfig');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     process.env.BABEL_ENV = 'production';
 
     const config = loadDialogConfig(args.config);
-    const webConfig = createWebConfig(config.web);
+    const webConfig = createWebpackConfigForWeb(config.web);
 
     await build(webConfig);
   },

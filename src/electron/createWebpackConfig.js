@@ -9,7 +9,7 @@ const { EnvironmentPlugin } = require('webpack');
 
 import type { DesktopOptions, WebOptions } from '../types';
 const createPackage = require('./createPackage');
-const createWebConfig = require('../web/createWebpackConfig');
+const { createWebpackConfigForWeb } = require('../web/createWebpackConfig');
 
 function createMainConfig(options: DesktopOptions) {
   return {
@@ -54,7 +54,7 @@ function createMainConfig(options: DesktopOptions) {
 }
 
 function createRendererConfig(web: WebOptions, desktop: DesktopOptions) {
-  return createWebConfig({
+  return createWebpackConfigForWeb({
     ...web,
     gzip: false,
     output: path.join(desktop.output, 'app'),
