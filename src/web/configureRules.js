@@ -167,7 +167,9 @@ function configureModuleRules(options: WebOptions) {
     rules.push({
       test: /\.css$/,
       use: [
-        'style-loader',
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
         {
           loader: 'css-loader',
           options: {
@@ -190,7 +192,9 @@ function configureModuleRules(options: WebOptions) {
     rules.push({
       test: /\.css$/,
       use: [
-        'style-loader',
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
         {
           loader: 'css-loader',
           options: {
@@ -210,7 +214,9 @@ function configureModuleRules(options: WebOptions) {
     rules.push({
       test: /\.css$/,
       use: [
-        'style-loader',
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
         {
           loader: 'css-loader',
           options: {
@@ -235,7 +241,9 @@ function configureModuleRules(options: WebOptions) {
     rules.push({
       test: /\.css$/,
       use: [
-        'style-loader',
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
         {
           loader: 'css-loader',
           options: {

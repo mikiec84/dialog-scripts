@@ -17,6 +17,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OverridePlugin = require('../webpack/OverridePlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 function configurePlugins(options: WebOptions) {
   const plugins = [];
@@ -67,13 +68,15 @@ function configurePlugins(options: WebOptions) {
 
   plugins.push(new DuplicatePackageCheckerPlugin());
 
-  if (options.environment === 'production') {
-    plugins.push(
-      new MiniCssExtractPlugin({
-        filename: '[name].[contenthash].css',
-      }),
-    );
+  plugins.push(
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
+  );
 
+  plugins.push(new OptimizeCSSAssetsPlugin());
+
+  if (options.environment === 'production') {
     if (options.gzip !== false) {
       plugins.push(
         new CompressionPlugin({
