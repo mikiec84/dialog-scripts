@@ -1,6 +1,6 @@
 {
   "name": "@dlghq/dialog-scripts",
-  "version": "1.4.2-dedupe.0",
+  "version": "1.4.2",
   "main": "lib/index.js",
   "files": [
     "lib",
